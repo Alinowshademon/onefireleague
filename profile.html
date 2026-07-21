@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>∆NE FIRE LEAGUE | Player Profile</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0a1220;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:430px;
+background:#1b2740;
+border-radius:28px;
+padding:35px 25px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+h1{
+color:#18cfff;
+font-size:32px;
+font-weight:bold;
+margin-bottom:10px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+h2{
+color:#ffd633;
+margin-bottom:25px;
+font-size:24px;
+}
+
+.profile-card{
+background:#24334d;
+border-radius:18px;
+padding:20px;
+margin-bottom:25px;
+text-align:left;
+}
+
+.profile-card p{
+color:#ffffff;
+font-size:18px;
+margin:18px 0;
+line-height:1.5;
+}
+
+.profile-card strong{
+color:#18cfff;
+}
+
+.profile-card span{
+color:#ffffff;
+font-weight:bold;
+}
+
+button{
+width:100%;
+margin:12px 0;
+padding:17px;
+border:none;
+border-radius:15px;
+background:#19c7f7;
+color:#07111d;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 6px 18px rgba(0,200,255,.35);
+}
+
+button:hover{
+background:#32d5ff;
+transform:translateY(-3px);
+box-shadow:0 0 20px #19c7f7;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+.footer{
+margin-top:18px;
+font-size:14px;
+color:#b8c7d6;
+}
+
+@media(max-width:480px){
+
+.container{
+padding:30px 20px;
+}
+
+h1{
+font-size:28px;
+}
+
+h2{
+font-size:22px;
+}
+
+.profile-card p{
+font-size:17px;
+}
+
+button{
+font-size:17px;
+padding:16px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👤 Player Profile</h1>
+
+<h2 id="playerName">Loading...</h2>
+
+<div class="profile-card">
+
+<p><strong>🎮 IGN:</strong> <span id="ign"></span></p>
+
+<p><strong>🆔 Free Fire UID:</strong> <span id="ffuid"></span></p>
+
+<p><strong>🌍 Address:</strong> <span id="country"></span></p>
+
+<p><strong>📱 Phone:</strong> <span id="phone"></span></p>
+
+</div>
+
+<button onclick="location.href='edit-profile.html'">
+✏️ Edit Profile
+</button>
+
+<button onclick="location.href='dashboard.html'">
+⬅️ Back to Dashboard
+</button>
+
+<div class="footer">
+© 2026 ∆NE FIRE LEAGUE
+</div>
+
+</div>
+
+<script type="module" src="profile.js"></script>
+
+</body>
+</html>

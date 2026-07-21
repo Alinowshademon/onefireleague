@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>∆NE FIRE LEAGUE | Match Time</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0a1220;
+display:flex;
+justify-content:center;
+padding:20px;
+min-height:100vh;
+}
+
+.wrapper{
+width:100%;
+max-width:900px;
+display:flex;
+flex-direction:column;
+gap:25px;
+}
+
+.container{
+background:#1b2740;
+border-radius:28px;
+padding:30px;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+h1{
+text-align:center;
+font-size:34px;
+color:#18cfff;
+margin-bottom:8px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+h2{
+text-align:center;
+font-size:24px;
+color:#ffd633;
+margin-bottom:25px;
+}
+
+.box{
+background:#24334d;
+border:2px solid #19c7f7;
+border-radius:18px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(0,200,255,.15);
+}
+
+.box h3{
+color:#18cfff;
+margin-bottom:15px;
+text-align:center;
+}
+
+.info{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+margin:14px 0;
+font-size:18px;
+color:#ffffff;
+}
+
+.copy-btn{
+background:#19c7f7;
+color:#07111d;
+border:none;
+padding:8px 14px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+transition:.25s;
+box-shadow:0 4px 12px rgba(0,200,255,.35);
+}
+
+.copy-btn:hover{
+background:#32d5ff;
+box-shadow:0 0 15px #19c7f7;
+}
+
+.back-btn{
+display:block;
+width:100%;
+margin-top:20px;
+padding:17px;
+text-align:center;
+text-decoration:none;
+background:#19c7f7;
+color:#07111d;
+font-size:18px;
+font-weight:bold;
+border-radius:15px;
+transition:.25s;
+box-shadow:0 6px 18px rgba(0,200,255,.35);
+}
+
+.back-btn:hover{
+background:#32d5ff;
+transform:translateY(-3px);
+box-shadow:0 0 20px #19c7f7;
+}
+
+footer{
+text-align:center;
+margin-top:20px;
+font-size:14px;
+color:#9fb1c3;
+}
+
+@media(max-width:768px){
+
+.container{
+padding:22px;
+}
+
+h1{
+font-size:28px;
+}
+
+h2{
+font-size:21px;
+}
+
+.info{
+font-size:16px;
+gap:10px;
+}
+
+.copy-btn{
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="container">
+
+<h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
+
+<h2>Duo Clash Tournament</h2>
+
+<div class="box">
+
+<h3>🗓 Match Details</h3>
+
+<div class="info"><b>📅 Date:</b><span>28 July 2026</span></div>
+
+<div class="info"><b>🕥 Time:</b><span>10:30 PM</span></div>
+
+<div class="info"><b>🗺 Map:</b><span>Solara</span></div>
+
+</div>
+
+<div class="box">
+
+<h3>🎮 Room Details</h3>
+
+<div class="info">
+<b>Room ID:</b>
+<span id="roomId1">123456789</span>
+<button class="copy-btn" onclick="copyText('roomId1')">📋 Copy</button>
+</div>
+
+<div class="info">
+<b>Password:</b>
+<span id="roomPass1">654321</span>
+<button class="copy-btn" onclick="copyText('roomPass1')">📋 Copy</button>
+</div>
+
+</div>
+
+<footer>🔥 Best of Luck, Survivors! 🔥</footer>
+
+</div>
+
+<div class="container">
+
+<h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
+
+<h2>Weekly Lite Tournament</h2>
+
+<div class="box">
+
+<h3>🗓 Match Details</h3>
+
+<div class="info"><b>📅 Date:</b><span>29 July 2026</span></div>
+
+<div class="info"><b>🕥 Time:</b><span>10:30 PM</span></div>
+
+<div class="info"><b>🗺 Map:</b><span>Bermuda</span></div>
+
+</div>
+
+<div class="box">
+
+<h3>🎮 Room Details</h3>
+
+<div class="info">
+<b>Room ID:</b>
+<span id="roomId2">987654321</span>
+<button class="copy-btn" onclick="copyText('roomId2')">📋 Copy</button>
+</div>
+
+<div class="info">
+<b>Password:</b>
+<span id="roomPass2">123456</span>
+<button class="copy-btn" onclick="copyText('roomPass2')">📋 Copy</button>
+</div>
+
+</div>
+
+<footer>🔥 Best of Luck, Survivors! 🔥</footer>
+
+</div>
+
+<a href="dashboard.html" class="back-btn">⬅️ Back to Dashboard</a>
+
+</div>
+
+<script>
+
+function copyText(id){
+
+    const text = document.getElementById(id).innerText;
+
+    navigator.clipboard.writeText(text).catch((err)=>{
+        console.error("Failed to copy:", err);
+    });
+
+}
+
+</script>
+
+</body>
+</html>
