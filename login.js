@@ -11,8 +11,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     await signInWithEmailAndPassword(auth, email, password);
 
     // Redirect without showing a popup
-    window.location.href = "dashboard.html";
-
+    window.location.href = "Edit-profile.html";
   } catch (error) {
 
     // Show the error on the page instead of a popup
