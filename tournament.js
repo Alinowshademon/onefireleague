@@ -84,13 +84,80 @@ async function loadActiveTournament() {
 
   document.getElementById("tournamentMode").textContent =
     tournamentData.mode;
+// ===============================
+// UPDATE PLAYER LABELS
+// ===============================
 
+const player2Title =
+document.getElementById("player2Title");
+
+if (tournamentData.mode === "Solo") {
+
+  document.getElementById("teamName").placeholder =
+    "👤 Player Name";
+
+}
+
+else if (tournamentData.mode === "Duo") {
+
+  player2Title.textContent =
+    "👥 Player 2";
+
+}
+
+else if (tournamentData.mode === "Squad") {
+
+  player2Title.textContent =
+    "👥 Player 2";
+
+}
   document.getElementById("tournamentFee").textContent =
     tournamentData.fee;
 
   document.getElementById("paymentNumber").textContent =
     tournamentData.paymentNumber;
+// ===============================
+// SHOW PLAYERS BASED ON MODE
+// ===============================
 
+const player2Section =
+  document.getElementById("player2Section");
+
+const player3Section =
+  document.getElementById("player3Section");
+
+const player4Section =
+  document.getElementById("player4Section");
+
+const player5Section =
+  document.getElementById("player5Section");
+
+if (tournamentData.mode === "Solo") {
+  
+  player2Section.style.display = "none";
+  player3Section.style.display = "none";
+  player4Section.style.display = "none";
+  player5Section.style.display = "none";
+  
+}
+
+else if (tournamentData.mode === "Duo") {
+  
+  player2Section.style.display = "block";
+  player3Section.style.display = "none";
+  player4Section.style.display = "none";
+  player5Section.style.display = "none";
+  
+}
+
+else if (tournamentData.mode === "Squad") {
+  
+  player2Section.style.display = "block";
+  player3Section.style.display = "block";
+  player4Section.style.display = "block";
+  player5Section.style.display = "block";
+  
+}
 }
 
 onAuthStateChanged(auth, async (user) => {
@@ -220,10 +287,28 @@ document.getElementById("applyBtn").addEventListener(
       document.getElementById("teamName").value.trim();
 
     const partnerIgn =
-      document.getElementById("partnerIgn").value.trim();
+  document.getElementById("partnerIgn").value.trim();
 
-    const partnerUid =
-      document.getElementById("partnerUid").value.trim();
+const partnerUid =
+  document.getElementById("partnerUid").value.trim();
+
+const player3Ign =
+  document.getElementById("player3Ign").value.trim();
+
+const player3Uid =
+  document.getElementById("player3Uid").value.trim();
+
+const player4Ign =
+  document.getElementById("player4Ign").value.trim();
+
+const player4Uid =
+  document.getElementById("player4Uid").value.trim();
+
+const player5Ign =
+  document.getElementById("player5Ign").value.trim();
+
+const player5Uid =
+  document.getElementById("player5Uid").value.trim();
 
     const bkash =
       document.getElementById("bkashNumber").value.trim();
@@ -239,21 +324,82 @@ document.getElementById("applyBtn").addEventListener(
 
     }
 
-    if (partnerIgn === "") {
+    // ===============================
+// MODE-BASED PLAYER VALIDATION
+// ===============================
 
-      alert("Please enter Partner IGN.");
+if (tournamentData.mode === "Duo" ||
+  tournamentData.mode === "Squad") {
+  
+  if (partnerIgn === "") {
+    
+    alert("Please enter Player 2 IGN.");
+    
+    return;
+    
+  }
+  
+  if (partnerUid === "") {
+    
+    alert("Please enter Player 2 UID.");
+    
+    return;
+    
+  }
+  
+}
 
-      return;
-
-    }
-
-    if (partnerUid === "") {
-
-      alert("Please enter Partner UID.");
-
-      return;
-
-    }
+if (tournamentData.mode === "Squad") {
+  
+  if (player3Ign === "") {
+    
+    alert("Please enter Player 3 IGN.");
+    
+    return;
+    
+  }
+  
+  if (player3Uid === "") {
+    
+    alert("Please enter Player 3 UID.");
+    
+    return;
+    
+  }
+  
+  if (player4Ign === "") {
+    
+    alert("Please enter Player 4 IGN.");
+    
+    return;
+    
+  }
+  
+  if (player4Uid === "") {
+    
+    alert("Please enter Player 4 UID.");
+    
+    return;
+    
+  }
+  
+  if (player5Ign === "") {
+    
+    alert("Please enter Player 5 IGN.");
+    
+    return;
+    
+  }
+  
+  if (player5Uid === "") {
+    
+    alert("Please enter Player 5 UID.");
+    
+    return;
+    
+  }
+  
+}
 
     if (bkash === "") {
 
@@ -289,9 +435,20 @@ document.getElementById("applyBtn").addEventListener(
         document.getElementById("ffuid").value,
 
       partnerIGN: partnerIgn,
-
-      partnerUID: partnerUid,
-
+  
+  partnerUID: partnerUid,
+  
+  player3IGN: player3Ign,
+  
+  player3UID: player3Uid,
+  
+  player4IGN: player4Ign,
+  
+  player4UID: player4Uid,
+  
+  player5IGN: player5Ign,
+  
+  player5UID: player5Uid,
       country:
         document.getElementById("country").value,
 
