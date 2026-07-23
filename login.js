@@ -18,7 +18,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     if (docSnap.exists()) {
       window.location.href = "dashboard.html";
     } else {
-      window.location.href = "Edit-profile.html";
+      window.location.href = "edit-profile.html";
     }
     
   } catch (error) {
