@@ -104,7 +104,22 @@ margin-top:20px;
 color:#9fb1c3;
 font-size:14px;
 }
+.show-password{
+display:flex;
+align-items:center;
+justify-content:flex-start;
+gap:8px;
+margin:8px 0 12px;
+color:#c8d6e2;
+font-size:15px;
+cursor:pointer;
+}
 
+.show-password input{
+width:auto;
+margin:0;
+accent-color:#19c7f7;
+}
 @media(max-width:480px){
 
 .container{
@@ -142,7 +157,6 @@ padding:16px;
 <h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
 
 <h2>Create Player Account</h2>
-
 <input
 type="email"
 id="signupEmail"
@@ -152,6 +166,11 @@ placeholder="📧 Email">
 type="password"
 id="signupPassword"
 placeholder="🔒 Password">
+
+<label class="show-password">
+  <input type="checkbox" id="showPassword">
+ Show Password
+</label>
 
 <button id="signupBtn">
 ✅ Create Account
@@ -170,6 +189,16 @@ placeholder="🔒 Password">
 </div>
 
 <script type="module" src="signup.js"></script>
+<script type="module" src="signup.js"></script>
+
+<script>
+const passwordInput = document.getElementById("signupPassword");
+const showPassword = document.getElementById("showPassword");
+
+showPassword.addEventListener("change", function () {
+  passwordInput.type = this.checked ? "text" : "password";
+});
+</script>
 
 </body>
 </html>
