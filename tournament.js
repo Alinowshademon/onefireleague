@@ -111,11 +111,21 @@ else if (tournamentData.mode === "Squad") {
     "👥 Player 2";
 
 }
-  document.getElementById("tournamentFee").textContent =
-    tournamentData.fee;
+document.getElementById("tournamentFee").textContent =
+  tournamentData.fee;
 
-  document.getElementById("paymentNumber").textContent =
-    tournamentData.paymentNumber;
+document.getElementById("firstPrizeText").textContent =
+  tournamentData.firstPrize || "-";
+
+document.getElementById("secondPrizeText").textContent =
+  tournamentData.secondPrize || "-";
+
+document.getElementById("thirdPrizeText").textContent =
+  tournamentData.thirdPrize || "-";
+
+document.getElementById("paymentNumber").textContent =
+  tournamentData.paymentNumber;
+  
 // ===============================
 // SHOW PLAYERS BASED ON MODE
 // ===============================
