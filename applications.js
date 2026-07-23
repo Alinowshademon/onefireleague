@@ -155,21 +155,33 @@ function renderApplications() {
 
   let filtered = allRegistrations.filter((data) => {
 
-    const searchable = [
-
-      data.teamName,
-
-      data.leaderIGN,
-
-      data.partnerIGN,
-
-      data.leaderUID,
-
-      data.partnerUID,
-
-      data.email
-
-    ]
+const searchable = [
+  
+  data.teamName,
+  
+  data.leaderIGN,
+  
+  data.partnerIGN,
+  
+  data.player3IGN,
+  
+  data.player4IGN,
+  
+  data.player5IGN,
+  
+  data.leaderUID,
+  
+  data.partnerUID,
+  
+  data.player3UID,
+  
+  data.player4UID,
+  
+  data.player5UID,
+  
+  data.email
+  
+]
 
     .join(" ")
 
@@ -219,9 +231,24 @@ function renderApplications() {
 
       <p><strong>🆔 Leader UID:</strong> ${data.leaderUID || "-"}</p>
 
-      <p><strong>👥 Partner:</strong> ${data.partnerIGN || "-"}</p>
+    <p><strong>👥 Player 2:</strong> ${data.partnerIGN || "-"}</p>
 
-      <p><strong>🆔 Partner UID:</strong> ${data.partnerUID || "-"}</p>
+<p><strong>🆔 Player 2 UID:</strong> ${data.partnerUID || "-"}</p>
+
+${data.player3IGN ? `
+<p><strong>👥 Player 3:</strong> ${data.player3IGN}</p>
+<p><strong>🆔 Player 3 UID:</strong> ${data.player3UID}</p>
+` : ""}
+
+${data.player4IGN ? `
+<p><strong>👥 Player 4:</strong> ${data.player4IGN}</p>
+<p><strong>🆔 Player 4 UID:</strong> ${data.player4UID}</p>
+` : ""}
+
+${data.player5IGN ? `
+<p><strong>👥 Player 5:</strong> ${data.player5IGN}</p>
+<p><strong>🆔 Player 5 UID:</strong> ${data.player5UID}</p>
+` : ""}
 
       <p><strong>🌍 Address:</strong> ${data.country || "-"}</p>
 
