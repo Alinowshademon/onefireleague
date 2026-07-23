@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin | Player Applications</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0a1220;
+color:white;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+color:#18cfff;
+margin-bottom:25px;
+text-shadow:0 0 12px #18cfff;
+}
+
+/* Statistics */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat-card{
+background:#1b2740;
+border:2px solid #19c7f7;
+border-radius:18px;
+padding:18px;
+text-align:center;
+box-shadow:0 0 15px rgba(0,200,255,.15);
+}
+
+.stat-card h3{
+color:#18cfff;
+margin-bottom:10px;
+font-size:17px;
+}
+
+.stat-card p{
+font-size:28px;
+font-weight:bold;
+}
+
+.total{
+color:white;
+}
+
+.pending{
+color:#ffd633;
+}
+
+.approved{
+color:#28c76f;
+}
+
+.rejected{
+color:#ea5455;
+}
+
+/* Search */
+
+.search-box{
+margin-bottom:20px;
+}
+
+.search-box input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+background:#24334d;
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.search-box input::placeholder{
+color:#9fb1c3;
+}
+
+/* Filters */
+
+.filters{
+display:flex;
+gap:10px;
+margin-bottom:25px;
+flex-wrap:wrap;
+}
+
+.filter-btn{
+flex:1;
+min-width:100px;
+padding:12px;
+background:#24334d;
+color:white;
+border:2px solid #19c7f7;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+}
+
+.filter-btn:hover{
+background:#19c7f7;
+color:#07111d;
+}
+
+.filter-btn.active{
+background:#19c7f7;
+color:#07111d;
+}
+
+/* Cards */
+
+.card{
+background:#1b2740;
+border:2px solid #19c7f7;
+border-radius:20px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(0,200,255,.15);
+}
+
+.card h2{
+color:#ffd633;
+margin-bottom:15px;
+}
+
+.card p{
+margin:8px 0;
+line-height:1.5;
+}
+
+.status{
+font-weight:bold;
+font-size:18px;
+margin-top:10px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+button{
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.approve{
+background:#28c76f;
+color:white;
+}
+
+.reject{
+background:#ea5455;
+color:white;
+}
+
+.delete{
+background:#111;
+color:#ff5c5c;
+border:2px solid #ff5c5c;
+}
+
+.delete:hover{
+background:#ff5c5c;
+color:white;
+}
+.clear-all{
+width:100%;
+margin-top:20px;
+padding:16px;
+background:#b30000;
+color:white;
+border:none;
+border-radius:12px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+.clear-all:hover{
+background:#ff0000;
+box-shadow:0 0 15px rgba(255,0,0,.4);
+}
+.back{
+width:100%;
+margin-top:20px;
+background:#19c7f7;
+color:#07111d;
+}
+
+.empty{
+text-align:center;
+color:#b8c7d6;
+margin-top:40px;
+font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👥 Player Applications</h1>
+
+<div class="stats">
+
+<div class="stat-card">
+<h3>👥 Total Teams</h3>
+<p id="totalTeams" class="total">0</p>
+</div>
+
+<div class="stat-card">
+<h3>🟡 Pending</h3>
+<p id="pendingTeams" class="pending">0</p>
+</div>
+
+<div class="stat-card">
+<h3>🟢 Approved</h3>
+<p id="approvedTeams" class="approved">0</p>
+</div>
+
+<div class="stat-card">
+<h3>🔴 Rejected</h3>
+<p id="rejectedTeams" class="rejected">0</p>
+</div>
+
+</div>
+
+<div class="search-box">
+
+<input
+id="searchInput"
+type="text"
+placeholder="🔍 Search Team, Leader, Partner or UID...">
+
+</div>
+
+<div class="filters">
+
+<button
+class="filter-btn active"
+data-filter="All">
+⚪ All
+</button>
+
+<button
+class="filter-btn"
+data-filter="Pending">
+🟡 Pending
+</button>
+
+<button
+class="filter-btn"
+data-filter="Approved">
+🟢 Approved
+</button>
+
+<button
+class="filter-btn"
+data-filter="Rejected">
+🔴 Rejected
+</button>
+
+</div>
+<div id="applicationsList">
+
+<div class="empty">
+
+Loading registrations...
+
+</div>
+
+</div>
+<button
+id="clearAllBtn"
+class="clear-all">
+
+🗑 Clear All Registrations
+
+</button>
+<button
+class="back"
+onclick="location.href='admin.html'">
+
+⬅️ Back to Admin Panel
+
+</button>
+
+</div>
+
+<script type="module" src="applications.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>∆NE FIRE LEAGUE | Edit Profile</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0a1220;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:430px;
+background:#1b2740;
+border-radius:28px;
+padding:35px 25px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+h1{
+font-size:32px;
+color:#18cfff;
+margin-bottom:30px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+border-radius:15px;
+background:#24334d;
+color:#ffffff;
+font-size:16px;
+outline:none;
+transition:.25s;
+}
+
+input::placeholder{
+color:#b8c7d6;
+}
+
+input:focus{
+box-shadow:0 0 12px #18cfff;
+}
+
+button{
+width:100%;
+padding:17px;
+margin-top:15px;
+border:none;
+border-radius:15px;
+background:#19c7f7;
+color:#07111d;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 6px 18px rgba(0,200,255,.35);
+}
+
+button:hover{
+background:#32d5ff;
+transform:translateY(-3px);
+box-shadow:0 0 20px #19c7f7;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+.footer{
+margin-top:20px;
+font-size:14px;
+color:#9fb1c3;
+}
+
+@media(max-width:480px){
+
+.container{
+padding:30px 20px;
+}
+
+h1{
+font-size:28px;
+}
+
+input{
+font-size:15px;
+padding:14px;
+}
+
+button{
+font-size:17px;
+padding:16px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✏️ Edit Profile</h1>
+
+<input
+id="ign"
+placeholder="🎮 IGN">
+
+<input
+id="ffuid"
+placeholder="🆔 Free Fire UID">
+
+<input
+id="country"
+placeholder="🌍 Address">
+
+<input
+id="phone"
+placeholder="📱 Phone">
+
+<button id="saveBtn">
+💾 Save Changes
+</button>
+
+<button onclick="location.href='profile.html'">
+⬅️ Cancel
+</button>
+
+<div class="footer">
+© 2026 ∆NE FIRE LEAGUE
+</div>
+
+</div>
+
+<script type="module" src="edit-profile.js"></script>
+
+</body>
+</html>

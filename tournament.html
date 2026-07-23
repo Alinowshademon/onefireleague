@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>∆NE FIRE LEAGUE | Tournament Registration</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0a1220;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:430px;
+background:#1b2740;
+border-radius:28px;
+padding:35px 25px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+h1{
+font-size:32px;
+color:#18cfff;
+margin-bottom:8px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+h2{
+font-size:24px;
+color:#ffd633;
+margin-bottom:20px;
+}
+
+h3{
+color:#18cfff;
+margin-top:18px;
+margin-bottom:8px;
+text-align:left;
+}
+
+.info-box{
+background:#24334d;
+border:2px solid #19c7f7;
+border-radius:18px;
+padding:18px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(0,200,255,.15);
+}
+
+.info-box p{
+color:#fff;
+font-size:17px;
+margin:10px 0;
+text-align:left;
+}
+
+.payment-box{
+background:#24334d;
+border:2px solid #19c7f7;
+border-radius:18px;
+padding:18px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(0,200,255,.15);
+}
+
+.payment-box h3{
+color:#18cfff;
+margin-bottom:10px;
+text-align:center;
+}
+
+.payment-box h2{
+color:#ffd633;
+margin-bottom:10px;
+}
+
+.payment-box p{
+color:#d5e4ef;
+font-size:15px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+border-radius:15px;
+background:#24334d;
+color:#fff;
+font-size:16px;
+outline:none;
+transition:.25s;
+}
+
+input::placeholder{
+color:#b8c7d6;
+}
+
+input:focus{
+box-shadow:0 0 12px #18cfff;
+}
+
+label{
+display:flex;
+align-items:flex-start;
+gap:10px;
+margin:15px 0;
+color:#fff;
+font-size:15px;
+text-align:left;
+}
+
+label input{
+width:auto;
+margin-top:3px;
+}
+
+button{
+width:100%;
+padding:17px;
+margin-top:15px;
+border:none;
+border-radius:15px;
+background:#19c7f7;
+color:#07111d;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 6px 18px rgba(0,200,255,.35);
+}
+
+button:hover{
+background:#32d5ff;
+transform:translateY(-3px);
+box-shadow:0 0 20px #19c7f7;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+.footer{
+margin-top:20px;
+font-size:14px;
+color:#9fb1c3;
+}
+
+#statusCard{
+display:none;
+}
+
+#statusTitle{
+color:#18cfff;
+margin-bottom:15px;
+}
+
+#statusValue{
+font-weight:bold;
+font-size:20px;
+}
+
+#statusMessage{
+margin-top:15px;
+color:#d5e4ef;
+line-height:1.6;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
+
+<h2 id="tournamentName">
+🔥 Loading Tournament...
+</h2>
+
+<div class="info-box">
+
+<p><strong>📅 Date:</strong>
+  <span id="tournamentDate">Loading...</span>
+</p>
+
+<p><strong>🕥 Time:</strong>
+  <span id="tournamentTime">Loading...</span>
+</p>
+<p><strong>🗺️ Map:</strong>
+  <span id="tournamentMap">Loading...</span>
+</p>
+<p><strong>🎮 Mode:</strong>
+  <span id="tournamentMode">Loading...</span>
+</p>
+<p><strong>💰 Registration Fee:</strong>
+  ৳<span id="tournamentFee">0</span>
+</p>
+</div>
+
+<div id="registrationForm">
+
+<div class="payment-box">
+
+<h3>💳 Pay via bKash</h3>
+
+<h2 id="paymentNumber">
+Loading...
+</h2>
+
+<p>
+After sending the<b> fee</b>, complete the registration below.
+Your application will remain pending until approved by the tournament organizer.
+</p>
+
+</div>
+
+<input
+id="teamName"
+placeholder="👥 Team Name">
+
+<h3>👤 Team Leader</h3>
+
+<input id="ign" placeholder="🎮 Leader IGN" readonly>
+
+<input id="ffuid" placeholder="🆔 Leader Free Fire UID" readonly>
+
+<input id="country" placeholder="🌍 Country" readonly>
+
+<input id="phone" placeholder="📱 Contact Number" readonly>
+<h3>👥 Player 2</h3>
+
+<input
+id="partnerIgn"
+placeholder="🎮 Player 2 IGN">
+
+<input
+id="partnerUid"
+placeholder="🆔 Player 2 Free Fire UID">
+
+<input
+id="bkashNumber"
+placeholder="💳 Team Leader's bKash Number">
+
+<label>
+
+<input
+type="checkbox"
+id="confirm">
+
+<span>I have sent the<b> fee</b> via bKash.</span>
+
+</label>
+
+<button id="applyBtn">
+
+📝 Register Team
+
+</button>
+
+</div>
+
+<div id="statusCard">
+
+<div class="info-box">
+
+<h2 id="statusTitle">Application Submitted</h2>
+
+<p><strong>Status:</strong>
+<span id="statusValue"></span></p>
+
+<p><strong>Team Name:</strong>
+<span id="savedTeam"></span></p>
+
+<p><strong>Your bKash Number:</strong>
+<span id="savedBkash"></span></p>
+
+<p id="statusMessage"></p>
+
+</div>
+
+</div>
+
+<button onclick="location.href='dashboard.html'">
+
+⬅️ Back to Dashboard
+
+</button>
+
+<div class="footer">
+
+© 2026 ∆NE FIRE LEAGUE
+
+</div>
+
+</div>
+
+<script type="module" src="tournament.js"></script>
+
+</body>
+
+</html>

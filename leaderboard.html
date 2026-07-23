@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>∆NE FIRE LEAGUE | Leaderboard</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background: #0b1220;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: #1b2940;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 200, 255, .25);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00cfff;
+            font-size: 40px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0, 200, 255, .5);
+        }
+        
+        h2 {
+            text-align: center;
+            color: #ffd33d;
+            margin-bottom: 30px;
+        }
+        
+        .top3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .first {
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #111;
+        }
+        
+        .second {
+            background: linear-gradient(135deg, #d9d9d9, #8c8c8c);
+            color: #111;
+        }
+        
+        .third {
+            background: linear-gradient(135deg, #cd7f32, #8b4513);
+        }
+        
+        .card .rank {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .card .name {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        
+        .card .points {
+            font-size: 18px;
+        }
+        
+        .table-box {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #24354a;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: #00cfff;
+            color: #0b1220;
+            padding: 15px;
+            font-size: 18px;
+        }
+        
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+        
+        tr:hover {
+            background: #314866;
+        }
+        
+        .back {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back a {
+            display: inline-block;
+            background: #00cfff;
+            color: #0b1220;
+            text-decoration: none;
+            padding: 14px 35px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        
+        .back a:hover {
+            background: #00b4e6;
+        }
+        
+        @media(max-width:768px) {
+            
+            .top3 {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 30px;
+            }
+            
+        }
+    </style>
+    
+</head>
+
+<body>
+    
+    <div class="container">
+        
+        <h1>🏆 ∆NE FIRE LEAGUE</h1>
+        <h2>Leaderboard</h2>
+        
+        <div class="top3">
+            
+            <div class="card first">
+                <div class="rank">🥇</div>
+                <div class="name" id="firstName">Loading...</div>
+                <div class="points" id="firstPoints">0 pts</div>
+            </div>
+            
+            <div class="card second">
+                <div class="rank">🥈</div>
+                <div class="name" id="secondName">Loading...</div>
+                <div class="points" id="secondPoints">0 pts</div>
+            </div>
+            
+            <div class="card third">
+                <div class="rank">🥉</div>
+                <div class="name" id="thirdName">Loading...</div>
+                <div class="points" id="thirdPoints">0 pts</div>
+            </div>
+            
+        </div>
+        
+        <div class="table-box">
+            
+            <table>
+                
+                <thead>
+                    
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Points</th>
+                    </tr>
+                    
+                </thead>
+                
+                <tbody id="leaderboardBody">
+                    
+                    <tr>
+                        <td colspan="3">Loading leaderboard...</td>
+                    </tr>
+                    
+                </tbody>
+                
+            </table>
+            
+        </div>
+        
+        <div class="back">
+            <a href="dashboard.html">⬅ Back</a>
+        </div>
+        
+    </div>
+    
+    <script type="module" src="leaderboard.js"></script>
+    
+</body>
+
+</html>
