@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📧 ∆NE FIRE LEAGUE | Email Center</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#07111d;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:500px;
+background:#1b2740;
+border-radius:28px;
+padding:25px;
+box-shadow:0 0 25px rgba(0,195,255,.25);
+}
+
+h1{
+color:#19c7f7;
+text-align:center;
+font-size:28px;
+margin-bottom:8px;
+text-shadow:0 0 15px rgba(0,195,255,.7);
+}
+
+h2{
+color:#ffd633;
+text-align:center;
+font-size:17px;
+margin-bottom:25px;
+}
+
+.section{
+
+background:#24334d;
+
+border:2px solid #19c7f7;
+
+border-radius:18px;
+
+padding:18px;
+
+margin-bottom:20px;
+
+}
+
+.section h3{
+
+color:#19c7f7;
+
+margin-bottom:15px;
+
+}
+
+label{
+
+display:block;
+
+color:#d5e4ef;
+
+font-size:14px;
+
+margin-bottom:6px;
+
+margin-top:14px;
+
+}
+
+input{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+outline:none;
+
+border-radius:12px;
+
+background:#0f1a2b;
+
+color:white;
+
+font-size:15px;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:15px;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+margin-top:15px;
+
+transition:.25s;
+
+}
+
+#saveBtn{
+
+background:#ffd633;
+
+color:#07111d;
+
+}
+
+#saveBtn:hover{
+
+background:#ffe066;
+
+}
+
+#sendBtn{
+
+background:#19c7f7;
+
+color:#07111d;
+
+}
+
+#sendBtn:hover{
+
+background:#32d5ff;
+
+}
+
+#backBtn{
+
+background:#2d3e59;
+
+color:white;
+
+}
+
+#backBtn:hover{
+
+background:#415675;
+
+}
+
+.footer{
+
+margin-top:20px;
+
+text-align:center;
+
+color:#9fb1c3;
+
+font-size:13px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📧 ∆NE FIRE LEAGUE</h1>
+
+<h2>Email Center</h2>
+
+<div class="section">
+
+<h3>🎮 Match Details</h3>
+
+<label>🏆 Tournament Name</label>
+<input type="text" id="tournamentName"
+placeholder="DUO CLASH">
+
+<label>📅 Match Date</label>
+<input type="text" id="matchDate" placeholder="26 July 2026">
+
+<label>🕙 Match Time</label>
+<input type="text" id="matchTime" placeholder="10:30 PM">
+
+<label>🗺 Map</label>
+<input type="text" id="matchMap" placeholder="Bermuda">
+
+<label>🆔 Room ID</label>
+<input type="text" id="roomId" placeholder="Enter Room ID">
+
+<label>🔑 Room Password</label>
+<input type="text" id="roomPass" placeholder="Enter Password">
+
+<label>🏆 Prize</label>
+<input type="text" id="prize" placeholder="1st Prize - 300 ৳">
+
+<button id="saveBtn">
+💾 Save Match Details
+</button>
+
+<button id="sendBtn">
+📧 Send Match Details
+</button>
+
+<div id="emailProgress" style="display:none;">
+
+<h3>📧 Sending Match Details</h3>
+
+<p id="progressText">
+Preparing...
+</p>
+
+<div id="emailLog"></div>
+
+</div>
+<div id="failedSection" style="display:none;">
+
+<h3>❌ Failed Emails</h3>
+
+<div id="failedList"></div>
+
+<button id="retryBtn">
+🔄 Retry Failed Emails
+</button>
+
+</div>
+<button id="backBtn"
+onclick="location.href='admin.html'">
+⬅ Back to Admin Panel
+</button>
+
+</div>
+
+<div class="footer">
+© 2026 ∆NE FIRE LEAGUE
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script type="module" src="email-center.js"></script>
+
+
+</body>
+
+</html>
