@@ -33,9 +33,26 @@ const timeInput =
 const feeInput =
   document.getElementById("fee");
 
+const firstPrize =
+  document.getElementById("firstPrize");
+
+const secondPrize =
+  document.getElementById("secondPrize");
+
+const thirdPrize =
+  document.getElementById("thirdPrize");
+
 const paymentInput =
   document.getElementById("payment");
+const firstPrizeInput =
+  document.getElementById("firstPrize");
 
+const secondPrizeInput =
+  document.getElementById("secondPrize");
+
+const thirdPrizeInput =
+  document.getElementById("thirdPrize");
+  
 const registrationOpen =
   document.getElementById("registrationOpen");
 
@@ -163,8 +180,17 @@ async function loadTournaments() {
 
       feeInput.value = data.fee || "";
 
-      paymentInput.value =
-        data.paymentNumber || "";
+firstPrizeInput.value =
+  data.firstPrize || "";
+
+secondPrizeInput.value =
+  data.secondPrize || "";
+
+thirdPrizeInput.value =
+  data.thirdPrize || "";
+  
+paymentInput.value =
+  data.paymentNumber || "";
 
       registrationOpen.checked =
         data.registrationOpen || false;
@@ -244,12 +270,24 @@ saveBtn.onclick = async () => {
       time: timeInput.value,
 
       fee: Number(feeInput.value),
-
-      paymentNumber: paymentInput.value,
-
-      registrationOpen:
-        registrationOpen.checked,
-
+  
+  firstPrize: firstPrize.value,
+  
+  secondPrize: secondPrize.value,
+  
+  thirdPrize: thirdPrize.value,
+  
+  paymentNumber: paymentInput.value,
+  
+  firstPrize: firstPrizeInput.value,
+  
+  secondPrize: secondPrizeInput.value,
+  
+  thirdPrize: thirdPrizeInput.value,
+  
+  registrationOpen:
+  registrationOpen.checked,
+  
       active:
         activeTournament.checked
 
@@ -280,7 +318,13 @@ newBtn.onclick = () => {
 
   feeInput.value = "";
 
-  paymentInput.value = "";
+firstPrize.value = "";
+
+secondPrize.value = "";
+
+thirdPrize.value = "";
+
+paymentInput.value = "";
 
   registrationOpen.checked = true;
 
@@ -325,7 +369,13 @@ deleteBtn.onclick = async () => {
 
   feeInput.value = "";
 
-  paymentInput.value = "";
+firstPrize.value = "";
+
+secondPrize.value = "";
+
+thirdPrize.value = "";
+
+paymentInput.value = "";
 
   registrationOpen.checked = true;
 
