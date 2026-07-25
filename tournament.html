@@ -184,7 +184,57 @@ margin-top:15px;
 color:#d5e4ef;
 line-height:1.6;
 }
+.prize-box{
+background:#24334d;
+border:2px solid #19c7f7;
+border-radius:18px;
+padding:18px;
+margin-top:18px;
+box-shadow:0 0 15px rgba(0,200,255,.15);
+}
 
+.prize-box h3{
+text-align:center;
+color:#ffd633;
+margin-bottom:15px;
+}
+
+.prize-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px;
+margin:10px 0;
+border-radius:12px;
+font-size:16px;
+font-weight:bold;
+}
+
+.prize-item span{
+color:#fff;
+}
+
+.prize-item b{
+color:#fff;
+}
+
+.first{
+background:linear-gradient(90deg,#f6c945,#d99b00);
+color:#07111d;
+}
+
+.first span,
+.first b{
+color:#07111d;
+}
+
+.second{
+background:linear-gradient(90deg,#d7d7d7,#9b9b9b);
+}
+
+.third{
+background:linear-gradient(90deg,#d28a45,#9f5d26);
+}
 </style>
 
 </head>
@@ -220,18 +270,26 @@ line-height:1.6;
 
 <hr style="margin:15px 0;border:1px solid #19c7f7;">
 
-<p><strong>🥇 1st Prize:</strong>
-  <span id="firstPrizeText">Loading...</span>
-</p>
+<div class="prize-box">
 
-<p><strong>🥈 2nd Prize:</strong>
-  <span id="secondPrizeText">Loading...</span>
-</p>
+<h3>🏆 Prize Pool</h3>
 
-<p><strong>🥉 3rd Prize:</strong>
-  <span id="thirdPrizeText">Loading...</span>
-</p>
+<div class="prize-item first">
+<span>🥇 1st Prize</span>
+<b id="firstPrizeText">Loading...</b>
+</div>
 
+<div class="prize-item second">
+<span>🥈 2nd Prize</span>
+<b id="secondPrizeText">Loading...</b>
+</div>
+
+<div class="prize-item third">
+<span>🥉 3rd Prize</span>
+<b id="thirdPrizeText">Loading...</b>
+</div>
+
+</div>
 </div>
 
 <div id="registrationForm">
