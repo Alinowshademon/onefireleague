@@ -9,24 +9,37 @@ import {
 const messaging = getMessaging(app);
 
 export async function requestNotificationPermission() {
+
+  if (!("serviceWorker" in navigator)) {
+    console.log("Service Worker not supported.");
+    return null;
+  }
+
+  // Register service worker
+  const registration = await navigator.serviceWorker.register(
+    "/onefireleague/firebase-messaging-sw.js"
+  );
+
   const permission = await Notification.requestPermission();
 
-  if (permission === "granted") {
-    const token = await getToken(messaging, {
-      vapidKey: "BAYHBWelMYyvCPrsOfsC9yltX9lVXUhm1rv8ALyLcw-c8llHS1udvYwxuIUzblkkJR6RTA1uH0Vqfmd77MguoHI"
-    });
-
-    console.log("FCM Token:", token);
-
-    return token;
-  } else {
+  if (permission !== "granted") {
     console.log("Notification permission denied.");
     return null;
   }
+
+  const token = await getToken(messaging, {
+    vapidKey: "BAYHBWelMYyvCPrsOfsC9yltX9lVXUhm1rv8ALyLcw-c8llHS1udvYwxuIUzblkkJR6RTA1uH0Vqfmd77MguoHI",
+    serviceWorkerRegistration: registration
+  });
+
+  console.log("FCM Token:", token);
+
+  return token;
 }
 
 onMessage(messaging, (payload) => {
-  console.log("Message received:", payload);
-
-  alert(payload.notification.title + "\n" + payload.notification.body);
+  new Notification(payload.notification.title, {
+    body: payload.notification.body,
+    icon: "/onefireleague/icon-192.png"
+  });
 });
