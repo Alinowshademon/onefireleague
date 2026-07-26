@@ -40,6 +40,15 @@ document.getElementById("savedBkash");
 const savedTeam =
 document.getElementById("savedTeam");
 
+const registrationCount =
+document.getElementById("registrationCount");
+
+const progressFill =
+document.getElementById("progressFill");
+
+const registrationClosed =
+document.getElementById("registrationClosed");
+
 async function loadActiveTournament() {
 
   const snapshot = await getDocs(
@@ -125,7 +134,7 @@ document.getElementById("thirdPrizeText").textContent =
 
 document.getElementById("paymentNumber").textContent =
   tournamentData.paymentNumber;
-  
+
 // ===============================
 // SHOW PLAYERS BASED ON MODE
 // ===============================
@@ -143,33 +152,96 @@ const player5Section =
   document.getElementById("player5Section");
 
 if (tournamentData.mode === "Solo") {
-  
+
   player2Section.style.display = "none";
   player3Section.style.display = "none";
   player4Section.style.display = "none";
   player5Section.style.display = "none";
-  
+
 }
 
 else if (tournamentData.mode === "Duo") {
-  
+
   player2Section.style.display = "block";
   player3Section.style.display = "none";
   player4Section.style.display = "none";
   player5Section.style.display = "none";
-  
+
 }
 
 else if (tournamentData.mode === "Squad") {
-  
+
   player2Section.style.display = "block";
   player3Section.style.display = "block";
   player4Section.style.display = "block";
   player5Section.style.display = "block";
-  
-}
-}
 
+}
+}
+async function updateRegistrationProgress() {
+
+  const snapshot = await getDocs(
+    collection(db, "registrations")
+  );
+
+  let registered = 0;
+
+  snapshot.forEach((doc) => {
+
+    const data = doc.data();
+
+    if (data.tournamentId === tournamentId) {
+      registered++;
+    }
+
+  });
+
+  const maxTeams =
+    tournamentData.maxTeams || 0;
+
+  registrationCount.textContent =
+    `${registered} / ${maxTeams} Teams`;
+
+  const percent =
+    maxTeams > 0
+      ? (registered / maxTeams) * 100
+      : 0;
+
+  progressFill.style.width =
+    percent + "%";
+
+  if (percent >= 100) {
+
+    progressFill.style.background =
+      "#ea5455";
+
+  }
+
+  else if (percent >= 70) {
+
+    progressFill.style.background =
+      "#ffd633";
+
+  }
+
+  else {
+
+    progressFill.style.background =
+      "#28c76f";
+
+  }
+
+  if (registered >= maxTeams && maxTeams > 0) {
+
+    registrationClosed.style.display =
+      "block";
+
+    registrationForm.style.display =
+      "none";
+
+  }
+
+}
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
@@ -183,7 +255,7 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user;
 
   await loadActiveTournament();
-
+await updateRegistrationProgress();
   const playerRef =
   doc(db, "players", user.uid);
 
@@ -340,75 +412,75 @@ const player5Uid =
 
 if (tournamentData.mode === "Duo" ||
   tournamentData.mode === "Squad") {
-  
+
   if (partnerIgn === "") {
-    
+
     alert("Please enter Player 2 IGN.");
-    
+
     return;
-    
+
   }
-  
+
   if (partnerUid === "") {
-    
+
     alert("Please enter Player 2 UID.");
-    
+
     return;
-    
+
   }
-  
+
 }
 
 if (tournamentData.mode === "Squad") {
-  
+
   if (player3Ign === "") {
-    
+
     alert("Please enter Player 3 IGN.");
-    
+
     return;
-    
+
   }
-  
+
   if (player3Uid === "") {
-    
+
     alert("Please enter Player 3 UID.");
-    
+
     return;
-    
+
   }
-  
+
   if (player4Ign === "") {
-    
+
     alert("Please enter Player 4 IGN.");
-    
+
     return;
-    
+
   }
-  
+
   if (player4Uid === "") {
-    
+
     alert("Please enter Player 4 UID.");
-    
+
     return;
-    
+
   }
-  
+
   if (player5Ign === "") {
-    
+
     alert("Please enter Player 5 IGN.");
-    
+
     return;
-    
+
   }
-  
+
   if (player5Uid === "") {
-    
+
     alert("Please enter Player 5 UID.");
-    
+
     return;
-    
+
   }
-  
+
 }
 
     if (bkash === "") {
@@ -426,6 +498,35 @@ if (tournamentData.mode === "Squad") {
       return;
 
     }
+    const snapshot = await getDocs(
+  collection(db, "registrations")
+);
+
+let registered = 0;
+
+snapshot.forEach((doc) => {
+  
+  if (
+    doc.data().tournamentId === tournamentId
+  ) {
+    
+    registered++;
+    
+  }
+  
+});
+
+if (
+  registered >= tournamentData.maxTeams
+) {
+  
+  alert(
+    "Registration is closed. Tournament is full."
+  );
+  
+  return;
+  
+}
         const registration = {
 
       tournamentId: tournamentId,
@@ -445,19 +546,19 @@ if (tournamentData.mode === "Squad") {
         document.getElementById("ffuid").value,
 
       partnerIGN: partnerIgn,
-  
+
   partnerUID: partnerUid,
-  
+
   player3IGN: player3Ign,
-  
+
   player3UID: player3Uid,
-  
+
   player4IGN: player4Ign,
-  
+
   player4UID: player4Uid,
-  
+
   player5IGN: player5Ign,
-  
+
   player5UID: player5Uid,
       country:
         document.getElementById("country").value,
