@@ -198,7 +198,15 @@ async function updateRegistrationProgress() {
 
   const maxTeams =
     tournamentData.maxTeams || 0;
+document.getElementById("registeredCount").textContent =
+  registered;
 
+document.getElementById("maxSlots").textContent =
+  maxTeams;
+
+document.getElementById("slotBar").style.width =
+  (maxTeams > 0 ? (registered / maxTeams) * 100 : 0) + "%";
+  
   registrationCount.textContent =
     `${registered} / ${maxTeams} Teams`;
 
