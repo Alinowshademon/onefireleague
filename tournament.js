@@ -179,77 +179,67 @@ else if (tournamentData.mode === "Squad") {
 }
 }
 async function updateRegistrationProgress() {
-
+  
   const snapshot = await getDocs(
     collection(db, "registrations")
   );
-
-  let registered = 0;
-
-  snapshot.forEach((doc) => {
-
-    const data = doc.data();
-
-    if (data.tournamentId === tournamentId) {
-      registered++;
-    }
-
-  });
-
-  const maxTeams =
-    tournamentData.maxTeams || 0;
-document.getElementById("registeredCount").textContent =
-  registered;
-
-document.getElementById("maxSlots").textContent =
-  maxTeams;
-
-document.getElementById("slotBar").style.width =
-  (maxTeams > 0 ? (registered / maxTeams) * 100 : 0) + "%";
   
+  let approved = 0;
+  let total = 0;
+  
+  snapshot.forEach((doc) => {
+    
+    const data = doc.data();
+    
+    if (data.tournamentId === tournamentId) {
+      
+      total++;
+      
+      if (data.status === "Approved") {
+        approved++;
+      }
+      
+    }
+    
+  });
+  
+  const maxTeams = tournamentData.maxTeams || 0;
+  
+  // Approved counter
+  document.getElementById("registeredCount").textContent =
+    approved;
+  
+  document.getElementById("maxSlots").textContent =
+    maxTeams;
+  
+  document.getElementById("slotBar").style.width =
+    (maxTeams > 0 ? (approved / maxTeams) * 100 : 0) + "%";
+  
+  // Registration progress (all submitted teams)
   registrationCount.textContent =
-    `${registered} / ${maxTeams} Teams`;
-
+    `${total} / ${maxTeams} Teams`;
+  
   const percent =
-    maxTeams > 0
-      ? (registered / maxTeams) * 100
-      : 0;
-
-  progressFill.style.width =
-    percent + "%";
-
+    maxTeams > 0 ? (total / maxTeams) * 100 : 0;
+  
+  progressFill.style.width = percent + "%";
+  
   if (percent >= 100) {
-
-    progressFill.style.background =
-      "#ea5455";
-
+    progressFill.style.background = "#ea5455";
+  } else if (percent >= 70) {
+    progressFill.style.background = "#ffd633";
+  } else {
+    progressFill.style.background = "#28c76f";
   }
-
-  else if (percent >= 70) {
-
-    progressFill.style.background =
-      "#ffd633";
-
+  
+  if (total >= maxTeams && maxTeams > 0) {
+    registrationClosed.style.display = "block";
+    registrationForm.style.display = "none";
   }
-
-  else {
-
-    progressFill.style.background =
-      "#28c76f";
-
-  }
-
-  if (registered >= maxTeams && maxTeams > 0) {
-
-    registrationClosed.style.display =
-      "block";
-
-    registrationForm.style.display =
-      "none";
-
-  }
-
+  
 }
+ 
+
 onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
