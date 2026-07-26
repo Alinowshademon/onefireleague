@@ -274,12 +274,6 @@ saveBtn.onclick = async () => {
 
       fee: Number(feeInput.value),
   
-  firstPrize: firstPrize.value,
-  
-  secondPrize: secondPrize.value,
-  
-  thirdPrize: thirdPrize.value,
-  
  paymentNumber: paymentInput.value,
 
 maxTeams: Number(maxTeams.value),
