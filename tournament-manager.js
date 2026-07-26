@@ -44,6 +44,8 @@ const thirdPrize =
 
 const paymentInput =
   document.getElementById("payment");
+  const maxTeams =
+  document.getElementById("maxTeams");
 const firstPrizeInput =
   document.getElementById("firstPrize");
 
@@ -191,7 +193,8 @@ thirdPrizeInput.value =
   
 paymentInput.value =
   data.paymentNumber || "";
-
+maxTeams.value =
+  data.maxTeams || "";
       registrationOpen.checked =
         data.registrationOpen || false;
 
@@ -277,8 +280,11 @@ saveBtn.onclick = async () => {
   
   thirdPrize: thirdPrize.value,
   
-  paymentNumber: paymentInput.value,
-  
+ paymentNumber: paymentInput.value,
+
+maxTeams: Number(maxTeams.value),
+
+
   firstPrize: firstPrizeInput.value,
   
   secondPrize: secondPrizeInput.value,
@@ -326,6 +332,7 @@ thirdPrize.value = "";
 
 paymentInput.value = "";
 
+maxTeams.value = "";
   registrationOpen.checked = true;
 
   activeTournament.checked = false;
@@ -376,6 +383,8 @@ secondPrize.value = "";
 thirdPrize.value = "";
 
 paymentInput.value = "";
+
+maxTeams.value = "";
 
   registrationOpen.checked = true;
 
