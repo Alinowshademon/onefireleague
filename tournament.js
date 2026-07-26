@@ -193,7 +193,9 @@ async function updateRegistrationProgress() {
     
     if (data.tournamentId === tournamentId) {
       
-      total++;
+      if (data.status !== "Rejected") {
+  total++;
+}
       
       if (data.status === "Approved") {
         approved++;
@@ -504,8 +506,11 @@ let registered = 0;
 
 snapshot.forEach((doc) => {
   
+  const data = doc.data();
+  
   if (
-    doc.data().tournamentId === tournamentId
+    data.tournamentId === tournamentId &&
+    data.status !== "Rejected"
   ) {
     
     registered++;
