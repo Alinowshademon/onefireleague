@@ -349,7 +349,7 @@ await updateRegistrationProgress();
           "🟡 Pending Approval";
 
         statusMessage.textContent =
-          "Your team registration has been received and is waiting for approval.";
+          "Your team registration has been received and is waiting for approval. For match information including 'Room ID PASS' go to 📅 Match times.";
 
     }
 
