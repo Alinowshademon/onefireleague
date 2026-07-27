@@ -92,7 +92,26 @@ font-weight:bold;
 .back:hover{
 text-decoration:underline;
 }
+.back-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  background: transparent;
+  color: #00d9ff;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bold;
+  border: 2px solid #00bfff;
+  border-radius: 12px;
+  transition: .3s;
+}
 
+.back-btn:hover {
+  background: #00bfff;
+  color: #0a1220;
+  box-shadow: 0 0 20px rgba(0, 191, 255, .6);
+}
 </style>
 
 </head>
@@ -129,8 +148,8 @@ target="_blank">
 ▶ YouTube
 </a>
 
-<a class="back" href="dashboard.html">
-⬅ Back to Dashboard
+<a href="dashboard.html" class="back-btn">
+⬅️ Back to Dashboard
 </a>
 
 </div>
