@@ -1,180 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Download AFL App</title>
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    body {
-      background: #0a1220;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .container {
-      width: 100%;
-      max-width: 420px;
-      background: #111b2e;
-      border: 2px solid #00bfff;
-      border-radius: 20px;
-      padding: 35px 25px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0, 191, 255, .35);
-    }
-    
-    h1 {
-      font-size: 28px;
-      color: #00d9ff;
-      margin-bottom: 10px;
-    }
-    
-    .subtitle {
-      color: #bcdcff;
-      margin-bottom: 25px;
-    }
-    
-    .logo-box {
-      width: 130px;
-      height: 130px;
-      margin: auto;
-      margin-bottom: 20px;
-      border: 2px dashed #00bfff;
-      border-radius: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: #09121f;
-    }
-    
-    .logo-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    .info {
-      font-size: 15px;
-      color: #d7e8ff;
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
-    
-    .download-btn {
-      display: block;
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(90deg, #0099ff, #00d4ff);
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 12px;
-      transition: .3s;
-      box-shadow: 0 0 15px rgba(0, 191, 255, .4);
-    }
-    
-    .download-btn:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px rgba(0, 191, 255, .8);
-    }
-    
-    .note {
-      margin-top: 25px;
-      font-size: 13px;
-      color: #8fb7d8;
-      line-height: 1.5;
-    }
-    
-    .version {
-      margin-top: 18px;
-      color: #00d9ff;
-      font-size: 14px;
-    }
-    .back-btn {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  margin-top: 15px;
-  background: transparent;
-  color: #00d9ff;
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: bold;
-  border: 2px solid #00bfff;
-  border-radius: 12px;
-  transition: .3s;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>∆NE FIRE LEAGUE Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
 }
 
-.back-btn:hover {
-  background: #00bfff;
-  color: #0a1220;
-  box-shadow: 0 0 20px rgba(0, 191, 255, .6);
+body{
+background:#0a1220;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
 }
-  </style>
-  
+
+.container{
+width:100%;
+max-width:430px;
+background:#1b2740;
+border-radius:28px;
+padding:35px 25px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+h1{
+color:#18cfff;
+font-size:34px;
+font-weight:bold;
+margin-bottom:8px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+#welcome{
+color:#ffd633;
+font-size:24px;
+margin-bottom:30px;
+}
+
+button{
+width:100%;
+margin:12px 0;
+padding:18px;
+border:none;
+border-radius:15px;
+background:#19c7f7;
+color:#07111d;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 6px 18px rgba(0,200,255,.35);
+}
+
+button:hover{
+background:#32d5ff;
+transform:translateY(-3px);
+box-shadow:0 0 20px #19c7f7;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+.footer{
+margin-top:25px;
+color:#b8c7d6;
+font-size:14px;
+}
+
+@media(max-width:480px){
+
+.container{
+padding:30px 20px;
+}
+
+h1{
+font-size:28px;
+}
+
+#welcome{
+font-size:22px;
+}
+
+button{
+font-size:17px;
+padding:16px;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
-  
-  <div class="container">
-    
-    <h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
-    
-    <p class="subtitle">
-      Official Android App
-    </p>
-    
-    <div class="logo-box">
-      
-      <!-- Replace app-logo.png with your logo -->
-      <img src="∆FL.jpg" alt="App Logo">
-      
-    </div>
-    
-    <p class="info">
-      
-      Download the latest version of the ∆FL App to register for tournaments, receive match updates, and manage your player profile.
-      
-    </p>
-    
-    <!-- Replace ∆FL.apk with your APK file -->
-    <a href="∆FL.apk" download class="download-btn">
-    
-      📥 Download APK
-      
-    </a>
-    <a href="dashboard.html" class="back-btn">
-⬅️ Back to Dashboard
-</a>
-    <p class="version">
-      
-      Version 1.0.0
-      
-    </p>
-    
-    <p class="note">
-      
-      Allow <b>Install from Unknown Sources</b> if prompted during installation.
-      
-    </p>
-    
-  </div>
+
+<div class="container">
+
+<h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
+
+<h2 id="welcome">Welcome Player</h2>
+
+<button onclick="location.href='profile.html'">
+👤 My Profile
+</button>
+
+<button onclick="location.href='tournament.html'">
+📝 Tournament Registration
+</button>
+
+<button onclick="location.href='leaderboard.html'">
+🏆 Leaderboard
+</button>
+
+<button onclick="location.href='matchtime.html'">
+📅 Match Times
+</button>
+
+<button onclick="location.href='mainpage.html'">
+📰 News Feed
+</button>
+
+<button id="adminBtn" style="display:none;">
+👑 Admin Panel
+</button>
+<button onclick="location.href='contact-us.html'">
+📞 Contact us
+</button>
+<button onclick="logout()">
+🚪 Logout
+</button>
+
+<div class="footer">
+© 2026 ∆NE FIRE LEAGUE
+</div>
+
+</div>
+
+<script type="module" src="dashboard.js"></script>
+
+<script>
+function logout(){
+if(confirm("Are you sure you want to logout?")){
+window.location.href="index.html";
+}
+}
+</script>
 
 </body>
-
 </html>
