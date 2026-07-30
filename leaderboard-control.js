@@ -1,89 +1,97 @@
-import { db } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 
 import {
-collection,
-addDoc,
-deleteDoc,
-doc,
-updateDoc,
-query,
-orderBy,
-onSnapshot
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc,
+  query,
+  orderBy,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// ====================================
-// USE THE SAME ADMIN CHECK YOU ALREADY
-// HAVE IN match-control.js
-// ====================================
+onAuthStateChanged(auth, async (user) => {
+        
+        // Not logged in
+        if (!user) {
+          location.href = "index.html";
+          return;
+        }
+        
+        // Check if user is an admin
+        const adminRef = doc(db, "admins", user.uid);
+        const adminSnap = await getDoc(adminRef);
+        
+        if (!adminSnap.exists()) {
+          alert("Access denied! Admins only.");
+          location.href = "dashboard.html";
+          return;
+        }
+        
+        // Admin only below this line
+        
+        const playerName = document.getElementById("playerName");
+        const playerPoints = document.getElementById("playerPoints");
+        const saveBtn = document.getElementById("saveBtn");
+        const table = document.getElementById("leaderboardTable");
+        
+        let editId = null;
+        
+        saveBtn.onclick = async () => {
+          
+          const name = playerName.value.trim();
+          const points = Number(playerPoints.value);
+          
+          if (name === "" || isNaN(points)) {
+            alert("Enter player name and points.");
+            return;
+          }
+          
+          if (editId) {
+            
+            await updateDoc(doc(db, "leaderboard", editId), {
+              name: name,
+              points: points
+            });
+            
+            saveBtn.textContent = "➕ Add Player";
+            editId = null;
+            
+          } else {
+            
+            await addDoc(collection(db, "leaderboard"), {
+              name: name,
+              points: points
+            });
+            
+          }
+          
+          playerName.value = "";
+          playerPoints.value = "";
+          
+        };
+        
+        const q = query(
+          collection(db, "leaderboard"),
+          orderBy("points", "desc")
+        );
+          onSnapshot(q, (snapshot) => {
 
+    table.innerHTML = "";
 
+    let rank = 1;
 
-// ====================================
+    snapshot.forEach((player) => {
 
-const playerName = document.getElementById("playerName");
-const playerPoints = document.getElementById("playerPoints");
-const saveBtn = document.getElementById("saveBtn");
-const table = document.getElementById("leaderboardTable");
+      const data = player.data();
 
-let editId = null;
-
-saveBtn.onclick = async () => {
-
-const name = playerName.value.trim();
-const points = Number(playerPoints.value);
-
-if(name==="" || isNaN(points)){
-alert("Enter player name and points.");
-return;
-}
-
-if(editId){
-
-await updateDoc(doc(db,"leaderboard",editId),{
-
-name:name,
-points:points
-
-});
-
-saveBtn.textContent="➕ Add Player";
-editId=null;
-
-}else{
-
-await addDoc(collection(db,"leaderboard"),{
-
-name:name,
-points:points
-
-});
-
-}
-
-playerName.value="";
-playerPoints.value="";
-
-};
-
-const q=query(
-
-collection(db,"leaderboard"),
-
-orderBy("points","desc")
-
-);
-
-onSnapshot(q,(snapshot)=>{
-
-table.innerHTML="";
-
-let rank=1;
-
-snapshot.forEach((player)=>{
-
-const data=player.data();
-
-table.innerHTML+=`
+      table.innerHTML += `
 
 <tr>
 
@@ -119,13 +127,13 @@ data-id="${player.id}">
 
 `;
 
-rank++;
+      rank++;
 
-});
+    });
 
-if(snapshot.empty){
+    if (snapshot.empty) {
 
-table.innerHTML=`
+      table.innerHTML = `
 
 <tr>
 
@@ -139,44 +147,42 @@ No players found.
 
 `;
 
-}
+    }
 
-// Edit
+    // Edit player
+    document.querySelectorAll(".editBtn").forEach(btn => {
 
-document.querySelectorAll(".editBtn").forEach(btn=>{
+      btn.onclick = () => {
 
-btn.onclick=()=>{
+        editId = btn.dataset.id;
 
-editId=btn.dataset.id;
+        playerName.value = btn.dataset.name;
 
-playerName.value=btn.dataset.name;
+        playerPoints.value = btn.dataset.points;
 
-playerPoints.value=btn.dataset.points;
+        saveBtn.textContent = "💾 Update Player";
 
-saveBtn.textContent="💾 Update Player";
+      };
 
-};
+    });
 
-});
+    // Delete player
+    document.querySelectorAll(".deleteBtn").forEach(btn => {
 
-// Delete
+      btn.onclick = async () => {
 
-document.querySelectorAll(".deleteBtn").forEach(btn=>{
+        if (confirm("Delete this player?")) {
 
-btn.onclick=async()=>{
+          await deleteDoc(
+            doc(db, "leaderboard", btn.dataset.id)
+          );
 
-if(confirm("Delete this player?")){
+        }
 
-await deleteDoc(
+      };
 
-doc(db,"leaderboard",btn.dataset.id)
+    });
 
-);
-
-}
-
-};
-
-});
+  });
 
 });
