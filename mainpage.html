@@ -21,15 +21,17 @@ min-height:100vh;
 }
 
 header{
-position:sticky;
+position:fixed;
 top:0;
+left:0;
+width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:20px;
 background:#1b2740;
 box-shadow:0 0 20px rgba(0,195,255,.18);
-z-index:100;
+z-index:1000;
 }
 
 header h2{
@@ -60,7 +62,7 @@ box-shadow:0 0 20px #19c7f7;
 #feed{
 width:95%;
 max-width:900px;
-margin:30px auto;
+margin:110px auto 30px;
 }
 
 .news-card{
@@ -127,7 +129,66 @@ padding:25px;
 color:#9fb1c3;
 font-size:14px;
 }
+/* Side Menu */
 
+.menu-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.45);
+display:none;
+justify-content:flex-end;
+z-index:2000;
+}
+
+.menu{
+width:260px;
+height:100%;
+background:#1b2740;
+padding:30px 20px;
+box-shadow:-5px 0 20px rgba(0,195,255,.25);
+animation:slide .25s ease;
+}
+
+@keyframes slide{
+from{
+transform:translateX(100%);
+}
+to{
+transform:translateX(0);
+}
+}
+
+.menu h3{
+color:#18cfff;
+text-align:center;
+margin-bottom:25px;
+font-size:24px;
+}
+
+.menu a{
+display:block;
+text-decoration:none;
+background:#19c7f7;
+color:#07111d;
+padding:15px;
+margin-bottom:15px;
+border-radius:12px;
+font-weight:bold;
+text-align:center;
+transition:.25s;
+}
+
+.menu a:hover{
+background:#32d5ff;
+}
+
+.close{
+background:#ff5c5c !important;
+color:white !important;
+}
 @media(max-width:768px){
 
 header h2{
@@ -149,7 +210,21 @@ font-size:20px;
 .video-box iframe{
 height:230px;
 }
+.loader{
+width:50px;
+height:50px;
+margin:25px auto;
+border:5px solid rgba(24,207,255,.25);
+border-top:5px solid #18cfff;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
 
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
 }
 
 </style>
@@ -165,52 +240,67 @@ height:230px;
 <button id="menuBtn">☰</button>
 
 </header>
+<div class="menu-overlay" id="menuOverlay">
 
+<div class="menu">
+
+<h3>Menu</h3>
+
+<a href="profile.html">👤 Profile</a>
+
+<a href="dashboard.html">🏠 Dashboard</a>
+
+<a href="index.html">🚪 Log Out</a>
+
+<a href="#" class="close" id="closeMenu">✖ Close</a>
+
+</div>
+
+</div>
 <div id="feed">
 
 <div class="news-card">
 
-<h1>🔥 Latest Videos</h1>
+<h1>📰 Loading News Feed...</h1>
 
-<h3>1. Rick and Roll</h3>
+<div class="loader"></div>
 
-<div class="video-box">
-
-<iframe
-src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-title="Rick and Roll"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen>
-</iframe>
-
-</div>
-
-<h3>2. Warm Up Match</h3>
-
-<div class="video-box">
-
-<iframe
-src="https://www.youtube.com/embed/glrFcrvxjsQ"
-title="Warm Up Match"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen>
-</iframe>
-
-</div>
-
-<a href="dashboard.html" class="back-btn">
-⬅ Back to Dashboard
-</a>
+<p style="text-align:center;color:#9fb1c3;">
+Fetching the latest videos...
+</p>
 
 </div>
 
 </div>
+
+
 
 <footer>
 © 2026 ∆NE FIRE LEAGUE
 </footer>
 
-<script src="mainpage.js"></script>
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const menuOverlay = document.getElementById("menuOverlay");
+const closeMenu = document.getElementById("closeMenu");
+
+menuBtn.onclick = () => {
+    menuOverlay.style.display = "flex";
+};
+
+closeMenu.onclick = (e) => {
+    e.preventDefault();
+    menuOverlay.style.display = "none";
+};
+
+menuOverlay.onclick = (e) => {
+    if(e.target === menuOverlay){
+        menuOverlay.style.display = "none";
+    }
+};
+</script>
+
+<script type="module" src="mainpage.js"></script>
 
 </body>
 </html>
