@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>∆NE FIRE LEAGUE | News Feed Control</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0a1220;
+color:#fff;
+}
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+padding:20px;
+background:#1b2740;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 0 20px rgba(0,195,255,.2);
+z-index:1000;
+}
+
+header h2{
+color:#18cfff;
+font-size:28px;
+}
+
+.container{
+max-width:900px;
+margin:110px auto 30px;
+padding:20px;
+}
+
+.card{
+background:#1b2740;
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 20px rgba(0,195,255,.15);
+margin-bottom:25px;
+}
+
+label{
+display:block;
+margin-bottom:10px;
+font-size:18px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+outline:none;
+font-size:16px;
+margin-bottom:20px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#18cfff;
+color:#07111d;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
+}
+
+button:hover{
+background:#32d5ff;
+}
+
+#status{
+margin-top:15px;
+text-align:center;
+color:#8cff98;
+font-weight:bold;
+}
+
+.video{
+background:#111b2f;
+padding:15px;
+border-radius:15px;
+margin-top:15px;
+word-break:break-all;
+}
+
+.video a{
+color:#18cfff;
+text-decoration:none;
+}
+
+.deleteBtn{
+margin-top:15px;
+background:#ff4d4d;
+color:white;
+}
+
+.back{
+display:block;
+margin-top:25px;
+text-align:center;
+text-decoration:none;
+padding:15px;
+background:#18cfff;
+color:#07111d;
+font-weight:bold;
+border-radius:12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h2>📰 News Feed Control</h2>
+</header>
+
+<div class="container">
+
+<div class="card">
+<label>Video Title</label>
+
+<input
+type="text"
+id="videoTitle"
+placeholder="e.g. Solo Warm Up Match">
+<label>YouTube URL</label>
+
+<input
+type="text"
+id="videoUrl"
+placeholder="https://youtu.be/......">
+
+<button id="addVideo">
+➕ Add Video
+</button>
+
+<p id="status"></p>
+
+</div>
+
+<div class="card">
+
+<h3>Uploaded Videos</h3>
+
+<div id="videoList">
+Loading...
+</div>
+
+</div>
+
+<a class="back" href="dashboard.html">
+⬅️ Back to Dashboard
+</a>
+
+</div>
+
+<script type="module" src="mainpage-control.js"></script>
+
+</body>
+</html>
