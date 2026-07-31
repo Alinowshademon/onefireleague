@@ -1,130 +1,159 @@
-import { db } from "./firebase.js";
+import { auth, db } from "./firebase.js";
+
 import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc,
-serverTimestamp
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  getDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-const titleInput = document.getElementById("videoTitle");
-const urlInput = document.getElementById("videoUrl");
-const addBtn = document.getElementById("addVideo");
-const videoList = document.getElementById("videoList");
-const status = document.getElementById("status");
 
-// Add Video
-addBtn.onclick = async () => {
+onAuthStateChanged(auth, async (user) => {
+        
+        // Not logged in
+        if (!user) {
+          location.href = "index.html";
+          return;
+        }
+        
+        // Check if user is an admin
+        const adminRef = doc(db, "admins", user.uid);
+        const adminSnap = await getDoc(adminRef);
+        
+        if (!adminSnap.exists()) {
+          alert("Access denied! Admins only.");
+          location.href = "dashboard.html";
+          return;
+        }
+        
+        // Admin only below this line
+        
+        const titleInput = document.getElementById("videoTitle");
+        const urlInput = document.getElementById("videoUrl");
+        const addBtn = document.getElementById("addVideo");
+        const videoList = document.getElementById("videoList");
+        const status = document.getElementById("status");
+        
+        // Add Video
+        addBtn.onclick = async () => {
+          
+          const url = urlInput.value.trim();
+          
+          if (!url) {
+            status.textContent = "Please enter a YouTube URL.";
+            return;
+          }
+          
+          try {
+            
+            await addDoc(collection(db, "newsfeed"), {
+              title: titleInput.value.trim(),
+              url: url,
+              createdAt: serverTimestamp()
+            });
+            
+            status.textContent = "✅ Video added.";
+            
+            titleInput.value = "";
+            urlInput.value = "";
+            
+            loadVideos();
+            
+          } catch (error) {
+            
+            status.textContent = error.message;
+            
+          }
+          
+        };
+        
+        // Load Videos
+        async function loadVideos() {
+            
+            videoList.innerHTML = "Loading...";
+            
+            try {
+              
+              const snapshot = await getDocs(collection(db, "newsfeed"));
+              
+              videoList.innerHTML = "";
+                    if (snapshot.empty) {
 
-const url = urlInput.value.trim();
+        videoList.innerHTML = "<p>No videos uploaded.</p>";
+        return;
 
-if(!url){
-status.textContent = "Please enter a YouTube URL.";
-return;
-}
+      }
 
-try{
+      snapshot.forEach((video) => {
 
-await addDoc(collection(db, "newsfeed"), {
-  title: titleInput.value.trim(),
-  url: url,
-  createdAt: serverTimestamp()
-});
+        const data = video.data();
 
-status.textContent = "✅ Video added.";
+        const div = document.createElement("div");
+        div.className = "video";
 
-urlInput.value="";
-
-loadVideos();
-
-}catch(error){
-
-status.textContent = error.message;
-
-}
-
-};
-
-// Load Videos
-async function loadVideos(){
-
-videoList.innerHTML = "Loading...";
-
-try{
-
-const snapshot = await getDocs(collection(db,"newsfeed"));
-
-videoList.innerHTML = "";
-
-if(snapshot.empty){
-
-videoList.innerHTML = "<p>No videos uploaded.</p>";
-return;
-
-}
-
-snapshot.forEach((doc)=>{
-
-const data = doc.data();
-
-const div = document.createElement("div");
-div.className = "video";
-
-div.innerHTML = `
-<p><strong>YouTube URL</strong></p>
+        div.innerHTML = `
+<p><strong>${data.title || "Untitled Video"}</strong></p>
 
 <a href="${data.url}" target="_blank">${data.url}</a>
 
 <br><br>
 
-<button class="deleteBtn" data-id="${doc.id}">
+<button class="deleteBtn" data-id="${video.id}">
 🗑 Delete
 </button>
 `;
 
-videoList.appendChild(div);
+        videoList.appendChild(div);
 
-});
+      });
 
-}catch(error){
+    } catch (error) {
 
-videoList.innerHTML = error.message;
+      videoList.innerHTML = error.message;
 
-}
+    }
 
-}
+  }
 
-// Delete Video
-async function deleteVideo(id){
+  // Delete Video
+  async function deleteVideo(id) {
 
-if(!confirm("Delete this video?")) return;
+    if (!confirm("Delete this video?")) return;
 
-try{
+    try {
 
-await deleteDoc(doc(db,"newsfeed",id));
+      await deleteDoc(doc(db, "newsfeed", id));
 
-status.textContent = "🗑 Video deleted.";
+      status.textContent = "🗑 Video deleted.";
 
-loadVideos();
+      loadVideos();
 
-}catch(error){
+    } catch (error) {
 
-status.textContent = error.message;
+      status.textContent = error.message;
 
-}
+    }
 
-}
+  }
 
-// Load videos when page opens
-loadVideos();
+  // Load videos when page opens
+  loadVideos();
 
-// Delete button click
-document.addEventListener("click", (e)=>{
+  // Delete button click
+  document.addEventListener("click", (e) => {
 
-if(e.target.classList.contains("deleteBtn")){
+    if (e.target.classList.contains("deleteBtn")) {
 
-deleteVideo(e.target.dataset.id);
+      deleteVideo(e.target.dataset.id);
 
-}
+    }
+
+  });
 
 });
