@@ -1,4 +1,9 @@
-import { db } from "./firebase.js";
+
+import { auth, db } from "./firebase.js";
+
+import {
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
   collection,
@@ -80,4 +85,16 @@ onSnapshot(q, (snapshot) => {
     window.FB.XFBML.parse(feed);
   }
 
+});
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  try {
+    await signOut(auth);
+    window.location.href = "index.html";
+  } catch (error) {
+    alert(error.message);
+  }
 });
