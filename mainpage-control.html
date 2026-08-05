@@ -80,7 +80,6 @@ color:#07111d;
 font-size:18px;
 font-weight:bold;
 cursor:pointer;
-transition:.2s;
 }
 
 button:hover{
@@ -94,15 +93,15 @@ color:#8cff98;
 font-weight:bold;
 }
 
-.video{
+.post{
 background:#111b2f;
 padding:15px;
 border-radius:15px;
 margin-top:15px;
-word-break:break-all;
+word-break:break-word;
 }
 
-.video a{
+.post a{
 color:#18cfff;
 text-decoration:none;
 }
@@ -138,21 +137,23 @@ border-radius:12px;
 <div class="container">
 
 <div class="card">
-<label>Video Title</label>
+
+<label>Post Title</label>
 
 <input
 type="text"
-id="videoTitle"
-placeholder="e.g. Solo Warm Up Match">
-<label>YouTube URL</label>
+id="postTitle"
+placeholder="e.g. Weekly Tournament Highlights">
+
+<label>Facebook Post / Video URL</label>
 
 <input
 type="text"
-id="videoUrl"
-placeholder="https://youtu.be/......">
+id="postUrl"
+placeholder="https://www.facebook.com/...">
 
-<button id="addVideo">
-➕ Add Video
+<button id="addPost">
+📰 Publish Post
 </button>
 
 <p id="status"></p>
@@ -161,9 +162,9 @@ placeholder="https://youtu.be/......">
 
 <div class="card">
 
-<h3>Uploaded Videos</h3>
+<h3>Published Posts</h3>
 
-<div id="videoList">
+<div id="postList">
 Loading...
 </div>
 
