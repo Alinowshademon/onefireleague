@@ -59,26 +59,28 @@ transform:scale(1.05);
 box-shadow:0 0 20px #19c7f7;
 }
 
-#feed{
-width:95%;
-max-width:900px;
-margin:110px auto 30px;
+#feed {
+    width: 100%;
+    max-width: 720px;
+    margin: 110px auto 30px;
+    padding: 0 15px;
 }
 
-.news-card{
-background:#1b2740;
-border-radius:25px;
-padding:25px;
-margin-bottom:30px;
-box-shadow:0 0 25px rgba(0,195,255,.18);
+.news-card {
+    background: #1b2740;
+    border-radius: 25px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 650px;
+    box-shadow: 0 0 25px rgba(0, 195, 255, .18);
 }
-
-.news-card h1{
-text-align:center;
-color:#18cfff;
-font-size:34px;
-margin-bottom:10px;
-text-shadow:0 0 15px rgba(24,207,255,.7);
+.news-card {
+    background: #1b2740;
+    border-radius: 25px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 25px rgba(0, 195, 255, .18);
+    width: 100%;
 }
 
 .news-card h3{
@@ -87,18 +89,19 @@ margin:20px 0 15px;
 font-size:22px;
 }
 
-.video-box{
-border:2px solid #19c7f7;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 0 18px rgba(0,200,255,.25);
+.media-box {
+    border: 2px solid #19c7f7;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 0 18px rgba(0, 200, 255, .25);
+    margin-top: 15px;
 }
 
-.video-box iframe{
-display:block;
-width:100%;
-height:450px;
-border:none;
+.media-box img,
+.media-box video {
+    width: 100%;
+    display: block;
+    border-radius: 15px;
 }
 
 .back-btn{
@@ -226,13 +229,37 @@ transform:rotate(360deg);
 }
 }
 }
+.fb-post{
+display:flex;
+justify-content:center;
+align-items:center;
+margin:20px auto;
+width:100%;
+overflow:hidden;
+}
 
+.fb-post > span{
+display:block !important;
+max-width:100%;
+border-radius:18px;
+overflow:hidden;
+}
+
+.fb-post iframe{
+display:block;
+max-width:100% !important;
+border:none !important;
+border-radius:18px;
+}
 </style>
 
 </head>
 
 <body>
+<div id="fb-root"></div>
 
+<script async defer crossorigin="anonymous"
+src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v23.0"></script>
 <header>
 
 <h2>📰 News Feed</h2>
@@ -250,8 +277,6 @@ transform:rotate(360deg);
 
 <a href="dashboard.html">🏠 Dashboard</a>
 
-<a href="tournament.html"> 📄 Tournament Registration</a>
-
 <a href="index.html">🚪 Log Out</a>
 
 <a href="#" class="close" id="closeMenu">✖ Close</a>
@@ -268,7 +293,7 @@ transform:rotate(360deg);
 <div class="loader"></div>
 
 <p style="text-align:center;color:#9fb1c3;">
-Fetching the latest videos...
+    Fetching the latest posts...
 </p>
 
 </div>
