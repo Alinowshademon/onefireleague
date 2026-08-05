@@ -1,103 +1,83 @@
 import { db } from "./firebase.js";
 
 import {
-collection,
-query,
-orderBy,
-onSnapshot
+  collection,
+  query,
+  orderBy,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const feed = document.getElementById("feed");
 
-function getEmbedUrl(url){
+const q = query(
+  collection(db, "newsfeed"),
+  orderBy("createdAt", "desc")
+);
 
-try{
+onSnapshot(q, (snapshot) => {
 
-// youtu.be/xxxx
-if(url.includes("youtu.be/")){
-const id = url.split("youtu.be/")[1].split("?")[0];
-return `https://www.youtube.com/embed/${id}`;
-}
+  feed.innerHTML = "";
 
-// youtube.com/watch?v=xxxx
-const u = new URL(url);
-const id = u.searchParams.get("v");
+  if (snapshot.empty) {
 
-if(id){
-return `https://www.youtube.com/embed/${id}`;
-}
+    feed.innerHTML = `
+      <div class="news-card">
+        <h1>🔥 Latest Updates</h1>
+        <p style="text-align:center;">
+          No posts available yet.
+        </p>
 
-}catch(e){}
+        <a href="dashboard.html" class="back-btn">
+          ⬅️ Back to Dashboard
+        </a>
+      </div>
+    `;
 
-return null;
+    return;
+  }
 
-}
+  let html = `
+    <div class="news-card">
+      <h1>🔥 Latest Updates</h1>
+  `;
 
-const q = collection(db, "newsfeed");
+  let number = 1;
 
-onSnapshot(q,(snapshot)=>{
+  snapshot.forEach((doc) => {
 
-feed.innerHTML="";
+    const data = doc.data();
 
-if(snapshot.empty){
+    html += `
 
-feed.innerHTML=`
-<div class="news-card">
-<h1>🔥 Latest Videos</h1>
-<p style="text-align:center;">
-No videos available yet.
-</p>
-</div>
-`;
+      <h3>${number}. ${data.title || "News Update"}</h3>
 
-return;
-
-}
-
-let html = `
-<div class="news-card">
-<h1>🔥 Latest Videos</h1>
-`;
-
-let number = 1;
-
-snapshot.forEach(doc=>{
-
-const data = doc.data();
-
-const embed = getEmbedUrl(data.url);
-
-if(!embed) return;
-
-html += `
-<h3>${number}. ${data.title || "Video"}</h3>
-
-<div class="video-box">
-
-<iframe
-src="${embed}"
-title="Video ${number}"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen>
-</iframe>
-
+      <div class="fb-post"
+     data-href="${data.url}"
+     data-show-text="true">
 </div>
 
-`;
+      <br>
 
-number++;
+    `;
 
-});
+    number++;
 
-html += `
+  });
 
-<a href="dashboard.html" class="back-btn">
-⬅️ Back to Dashboard
-</a>
+  html += `
 
-</div>
-`;
+    <a href="dashboard.html" class="back-btn">
+      ⬅️ Back to Dashboard
+    </a>
 
-feed.innerHTML = html;
+    </div>
+  `;
+
+  feed.innerHTML = html;
+
+  // Tell Facebook SDK to render the embeds
+  if (window.FB && window.FB.XFBML) {
+    window.FB.XFBML.parse(feed);
+  }
 
 });
