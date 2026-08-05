@@ -15,124 +15,129 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 onAuthStateChanged(auth, async (user) => {
-        
-        // Not logged in
-        if (!user) {
-          location.href = "index.html";
-          return;
-        }
-        
-        // Check if user is an admin
-        const adminRef = doc(db, "admins", user.uid);
-        const adminSnap = await getDoc(adminRef);
-        
-        if (!adminSnap.exists()) {
-          alert("Access denied! Admins only.");
-          location.href = "dashboard.html";
-          return;
-        }
-        
-        // Admin only below this line
-        
-        const titleInput = document.getElementById("videoTitle");
-        const urlInput = document.getElementById("videoUrl");
-        const addBtn = document.getElementById("addVideo");
-        const videoList = document.getElementById("videoList");
-        const status = document.getElementById("status");
-        
-        // Add Video
-        addBtn.onclick = async () => {
-          
-          const url = urlInput.value.trim();
-          
-          if (!url) {
-            status.textContent = "Please enter a YouTube URL.";
-            return;
-          }
-          
-          try {
-            
-            await addDoc(collection(db, "newsfeed"), {
-              title: titleInput.value.trim(),
-              url: url,
-              createdAt: serverTimestamp()
-            });
-            
-            status.textContent = "✅ Video added.";
-            
-            titleInput.value = "";
-            urlInput.value = "";
-            
-            loadVideos();
-            
-          } catch (error) {
-            
-            status.textContent = error.message;
-            
-          }
-          
-        };
-        
-        // Load Videos
-        async function loadVideos() {
-            
-            videoList.innerHTML = "Loading...";
-            
-            try {
-              
-              const snapshot = await getDocs(collection(db, "newsfeed"));
-              
-              videoList.innerHTML = "";
-                    if (snapshot.empty) {
 
-        videoList.innerHTML = "<p>No videos uploaded.</p>";
+  // Not logged in
+  if (!user) {
+    location.href = "index.html";
+    return;
+  }
+
+  // Admin check
+  const adminRef = doc(db, "admins", user.uid);
+  const adminSnap = await getDoc(adminRef);
+
+  if (!adminSnap.exists()) {
+    alert("Access denied! Admins only.");
+    location.href = "dashboard.html";
+    return;
+  }
+
+  // Elements
+  const titleInput = document.getElementById("postTitle");
+  const urlInput = document.getElementById("postUrl");
+  const addBtn = document.getElementById("addPost");
+  const postList = document.getElementById("postList");
+  const status = document.getElementById("status");
+
+  // Publish Post
+  addBtn.onclick = async () => {
+
+    const title = titleInput.value.trim();
+    const url = urlInput.value.trim();
+
+    if (!url) {
+      status.textContent = "Please enter a Facebook post URL.";
+      return;
+    }
+
+    try {
+
+      await addDoc(collection(db, "newsfeed"), {
+        title: title || "Untitled Post",
+        url: url,
+        createdAt: serverTimestamp()
+      });
+
+      status.textContent = "✅ Post published successfully.";
+
+      titleInput.value = "";
+      urlInput.value = "";
+
+      loadPosts();
+
+    } catch (error) {
+
+      status.textContent = error.message;
+
+    }
+
+  };
+
+  // Load Posts
+  async function loadPosts() {
+
+    postList.innerHTML = "Loading...";
+
+    try {
+
+      const snapshot = await getDocs(collection(db, "newsfeed"));
+
+      postList.innerHTML = "";
+
+      if (snapshot.empty) {
+
+        postList.innerHTML = "<p>No posts published.</p>";
         return;
 
       }
 
-      snapshot.forEach((video) => {
+      snapshot.forEach((post) => {
 
-        const data = video.data();
+        const data = post.data();
 
         const div = document.createElement("div");
-        div.className = "video";
+        div.className = "post";
 
         div.innerHTML = `
-<p><strong>${data.title || "Untitled Video"}</strong></p>
+          <p><strong>${data.title || "Untitled Post"}</strong></p>
 
-<a href="${data.url}" target="_blank">${data.url}</a>
+          <p style="margin-top:10px;">
+            <a href="${data.url}" target="_blank">
+              ${data.url}
+            </a>
+          </p>
 
-<br><br>
+          <button
+            class="deleteBtn"
+            data-id="${post.id}">
+            🗑 Delete
+          </button>
+        `;
 
-<button class="deleteBtn" data-id="${video.id}">
-🗑 Delete
-</button>
-`;
-
-        videoList.appendChild(div);
+        postList.appendChild(div);
 
       });
 
     } catch (error) {
 
-      videoList.innerHTML = error.message;
+      postList.innerHTML = error.message;
 
     }
 
   }
 
-  // Delete Video
-  async function deleteVideo(id) {
+  // Delete Post
+  async function deletePost(id) {
 
-    if (!confirm("Delete this video?")) return;
+    if (!confirm("Delete this post?")) return;
 
     try {
 
       await deleteDoc(doc(db, "newsfeed", id));
 
-      status.textContent = "🗑 Video deleted.";
+      status.textContent = "🗑 Post deleted.";
 
-      loadVideos();
+      loadPosts();
 
     } catch (error) {
 
@@ -142,18 +147,18 @@ onAuthStateChanged(auth, async (user) => {
 
   }
 
-  // Load videos when page opens
-  loadVideos();
-
-  // Delete button click
+  // Delete button
   document.addEventListener("click", (e) => {
 
     if (e.target.classList.contains("deleteBtn")) {
 
-      deleteVideo(e.target.dataset.id);
+      deletePost(e.target.dataset.id);
 
     }
 
   });
+
+  // Initial load
+  loadPosts();
 
 });
