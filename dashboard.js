@@ -19,8 +19,17 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
+  const playerRef = doc(db, "players", user.uid);
+const playerSnap = await getDoc(playerRef);
+
+if (playerSnap.exists()) {
+
+  const player = playerSnap.data();
+
   document.getElementById("welcome").innerHTML =
-    "Welcome<br>" + user.email;
+    "Welcome<br>" + (player.ign || "Player");
+
+}
 
   // Request notification permission and save FCM token
   try {
