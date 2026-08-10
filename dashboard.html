@@ -83,7 +83,37 @@ box-shadow:0 0 20px #19c7f7;
 button:active{
 transform:scale(.97);
 }
+/* Fixed Bottom Navigation */
 
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:65px;
+background:#1b2740;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -5px 20px rgba(0,195,255,.18);
+z-index:1500;
+}
+
+.bottom-nav a{
+text-decoration:none;
+font-size:28px;
+width:33.33%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:.2s;
+}
+
+.bottom-nav a:hover{
+background:rgba(25,199,247,.12);
+transform:scale(1.08);
+}
 .footer{
 margin-top:25px;
 color:#b8c7d6;
@@ -163,7 +193,21 @@ padding:16px;
 <div class="footer">
 © 2026 ∆NE FIRE LEAGUE
 </div>
+<nav class="bottom-nav">
 
+<a href="mainpage.html" title="News Feed">
+📰
+</a>
+
+<a href="dashboard.html" title="Dashboard">
+🏆
+</a>
+
+<a href="profile.html" title="Profile">
+👤
+</a>
+
+</nav>
 </div>
 <!-- Telegram -->
 <a
