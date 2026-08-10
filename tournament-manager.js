@@ -15,6 +15,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
+/* ===============================
+   FORM ELEMENTS
+================================ */
+
 const nameInput =
   document.getElementById("name");
 
@@ -33,19 +37,12 @@ const timeInput =
 const feeInput =
   document.getElementById("fee");
 
-const firstPrize =
-  document.getElementById("firstPrize");
-
-const secondPrize =
-  document.getElementById("secondPrize");
-
-const thirdPrize =
-  document.getElementById("thirdPrize");
-
 const paymentInput =
   document.getElementById("payment");
-  const maxTeams =
+
+const maxTeams =
   document.getElementById("maxTeams");
+
 const firstPrizeInput =
   document.getElementById("firstPrize");
 
@@ -54,13 +51,12 @@ const secondPrizeInput =
 
 const thirdPrizeInput =
   document.getElementById("thirdPrize");
-  
+
 const registrationOpen =
   document.getElementById("registrationOpen");
 
 const activeTournament =
   document.getElementById("activeTournament");
-
 
 const saveBtn =
   document.getElementById("saveBtn");
@@ -71,7 +67,6 @@ const newBtn =
 const deleteBtn =
   document.getElementById("deleteBtn");
 
-
 const tournamentList =
   document.getElementById("tournamentList");
 
@@ -79,38 +74,41 @@ const tournamentList =
 let editingId = null;
 
 
+/* ===============================
+   ADMIN AUTHENTICATION
+================================ */
+
 onAuthStateChanged(auth, async (user) => {
-  
-  
+
   if (!user) {
-    
+
     location.href = "index.html";
-    
+
     return;
-    
+
   }
-  
-  
+
+
   const adminSnap =
     await getDoc(
       doc(db, "admins", user.uid)
     );
-  
-  
+
+
   if (!adminSnap.exists()) {
-    
+
     alert("Access denied.");
-    
-    location.href = "dashboard.html";
-    
+
+    location.href =
+      "dashboard.html";
+
     return;
-    
+
   }
-  
-  
+
+
   loadTournaments();
-  
-  
+
 });
 async function loadTournaments() {
 
@@ -123,44 +121,68 @@ async function loadTournaments() {
   if (snapshot.empty) {
 
     tournamentList.innerHTML = `
-
       <div class="tournament-item">
-
         <h3>No tournaments found.</h3>
-
         <p>Create your first tournament.</p>
-
       </div>
-
     `;
 
     return;
-
   }
 
   snapshot.forEach((tournament) => {
 
     const data = tournament.data();
 
-    const item = document.createElement("div");
+    const item =
+      document.createElement("div");
 
-    item.className = "tournament-item";
+    item.className =
+      "tournament-item";
 
     item.innerHTML = `
 
-      <h3>🏆 ${data.name}</h3>
+      <h3>🏆 ${data.name || "Unnamed Tournament"}</h3>
 
-      <p>🎮 ${data.mode}</p>
+      <p>🎮 ${data.mode || "-"}</p>
 
-      <p>🗺 ${data.map}</p>
+      <p>🗺 ${data.map || "-"}</p>
 
-      <p>📅 ${data.date}</p>
+      <p>📅 ${data.date || "-"}</p>
 
-      <p>🕒 ${data.time}</p>
+      <p>🕒 ${data.time || "-"}</p>
+
+      <p>
+        💰 Fee:
+        ${data.fee ?? 0}
+      </p>
+
+      <p>
+        👥 Maximum Teams:
+        ${data.maxTeams || 0}
+      </p>
+
+      ${
+        data.registrationOpen
+          ? `
+            <div class="active-badge">
+              🟢 Registration Open
+            </div>
+          `
+          : `
+            <div class="active-badge">
+              🔴 Registration Closed
+            </div>
+          `
+      }
 
       ${
         data.active
-          ? '<div class="active-badge">⭐ Active Tournament</div>'
+          ? `
+            <div class="active-badge">
+              ⭐ Active Tournament
+            </div>
+          `
           : ""
       }
 
@@ -168,38 +190,47 @@ async function loadTournaments() {
 
     item.onclick = () => {
 
-      editingId = tournament.id;
+      editingId =
+        tournament.id;
 
-      nameInput.value = data.name || "";
+      nameInput.value =
+        data.name || "";
 
-      modeInput.value = data.mode || "Solo";
+      modeInput.value =
+        data.mode || "Solo";
 
-      mapInput.value = data.map || "Bermuda";
+      mapInput.value =
+        data.map || "Bermuda";
 
-      dateInput.value = data.date || "";
+      dateInput.value =
+        data.date || "";
 
-      timeInput.value = data.time || "";
+      timeInput.value =
+        data.time || "";
 
-      feeInput.value = data.fee || "";
+      feeInput.value =
+        data.fee ?? "";
 
-firstPrizeInput.value =
-  data.firstPrize || "";
+      firstPrizeInput.value =
+        data.firstPrize || "";
 
-secondPrizeInput.value =
-  data.secondPrize || "";
+      secondPrizeInput.value =
+        data.secondPrize || "";
 
-thirdPrizeInput.value =
-  data.thirdPrize || "";
-  
-paymentInput.value =
-  data.paymentNumber || "";
-maxTeams.value =
-  data.maxTeams || "";
+      thirdPrizeInput.value =
+        data.thirdPrize || "";
+
+      paymentInput.value =
+        data.paymentNumber || "";
+
+      maxTeams.value =
+        data.maxTeams ?? "";
+
       registrationOpen.checked =
-        data.registrationOpen || false;
+        data.registrationOpen ?? true;
 
       activeTournament.checked =
-        data.active || false;
+        data.active ?? false;
 
     };
 
@@ -208,100 +239,134 @@ maxTeams.value =
   });
 
 }
+
+/* ===============================
+   SAVE TOURNAMENT
+================================ */
+
 saveBtn.onclick = async () => {
 
-  if (nameInput.value.trim() === "") {
+  if (
+    nameInput.value.trim() === ""
+  ) {
 
-    alert("Please enter a tournament name.");
+    alert(
+      "Please enter a tournament name."
+    );
 
     return;
 
   }
 
-  let tournamentId = editingId;
+
+  let tournamentId =
+    editingId;
+
+
+  /* ===============================
+     CREATE NEW TOURNAMENT ID
+  ================================ */
 
   if (!tournamentId) {
 
     tournamentId =
-
       nameInput.value
         .trim()
         .toLowerCase()
-        .replace(/\s+/g, "-");
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
 
   }
 
-  // Only one tournament can be active
-  if (activeTournament.checked) {
 
-    const snapshot = await getDocs(
-      collection(db, "tournaments")
-    );
 
-    for (const tournament of snapshot.docs) {
 
-      await updateDoc(
+  /* ===============================
+     TOURNAMENT DATA
+  ================================ */
 
-        doc(db, "tournaments", tournament.id),
+  const tournamentData = {
 
-        {
+    name:
+      nameInput.value.trim(),
 
-          active: false
+    mode:
+      modeInput.value,
 
-        }
+    map:
+      mapInput.value,
 
-      );
+    date:
+      dateInput.value,
 
-    }
+    time:
+      timeInput.value,
 
-  }
+    fee:
+      Number(feeInput.value) || 0,
+
+    firstPrize:
+      firstPrizeInput.value.trim(),
+
+    secondPrize:
+      secondPrizeInput.value.trim(),
+
+    thirdPrize:
+      thirdPrizeInput.value.trim(),
+
+    paymentNumber:
+      paymentInput.value.trim(),
+
+    maxTeams:
+      Number(maxTeams.value) || 0,
+
+    registrationOpen:
+      registrationOpen.checked,
+
+    active:
+      activeTournament.checked
+
+  };
+
+
+  /* ===============================
+     SAVE TO FIRESTORE
+  ================================ */
 
   await setDoc(
 
-    doc(db, "tournaments", tournamentId),
+    doc(
+      db,
+      "tournaments",
+      tournamentId
+    ),
+
+    tournamentData,
 
     {
-
-      name: nameInput.value,
-
-      mode: modeInput.value,
-
-      map: mapInput.value,
-
-      date: dateInput.value,
-
-      time: timeInput.value,
-
-      fee: Number(feeInput.value),
-  
- paymentNumber: paymentInput.value,
-
-maxTeams: Number(maxTeams.value),
-
-
-  firstPrize: firstPrizeInput.value,
-  
-  secondPrize: secondPrizeInput.value,
-  
-  thirdPrize: thirdPrizeInput.value,
-  
-  registrationOpen:
-  registrationOpen.checked,
-  
-      active:
-        activeTournament.checked
-
+      merge: true
     }
 
   );
 
-  alert("Tournament saved successfully!");
 
-  editingId = null;
+  alert(
+    "Tournament saved successfully!"
+  );
 
-  loadTournaments();
+
+  editingId =
+    tournamentId;
+
+
+  await loadTournaments();
 
 };
+
+/* ===============================
+   NEW TOURNAMENT
+================================ */
+
 newBtn.onclick = () => {
 
   editingId = null;
@@ -318,15 +383,16 @@ newBtn.onclick = () => {
 
   feeInput.value = "";
 
-firstPrize.value = "";
+  firstPrizeInput.value = "";
 
-secondPrize.value = "";
+  secondPrizeInput.value = "";
 
-thirdPrize.value = "";
+  thirdPrizeInput.value = "";
 
-paymentInput.value = "";
+  paymentInput.value = "";
 
-maxTeams.value = "";
+  maxTeams.value = "";
+
   registrationOpen.checked = true;
 
   activeTournament.checked = false;
@@ -334,29 +400,53 @@ maxTeams.value = "";
 };
 
 
+/* ===============================
+   DELETE TOURNAMENT
+================================ */
+
 deleteBtn.onclick = async () => {
 
   if (!editingId) {
 
-    alert("Please select a tournament first.");
+    alert(
+      "Please select a tournament first."
+    );
 
     return;
 
   }
 
-  if (!confirm("Delete this tournament?")) {
+
+  const confirmed =
+    confirm(
+      "Delete this tournament?"
+    );
+
+
+  if (!confirmed) {
 
     return;
 
   }
+
 
   await deleteDoc(
 
-    doc(db, "tournaments", editingId)
+    doc(
+      db,
+      "tournaments",
+      editingId
+    )
 
   );
 
+
   editingId = null;
+
+
+  /* ===============================
+     CLEAR FORM
+  ================================ */
 
   nameInput.value = "";
 
@@ -370,22 +460,27 @@ deleteBtn.onclick = async () => {
 
   feeInput.value = "";
 
-firstPrize.value = "";
+  firstPrizeInput.value = "";
 
-secondPrize.value = "";
+  secondPrizeInput.value = "";
 
-thirdPrize.value = "";
+  thirdPrizeInput.value = "";
 
-paymentInput.value = "";
+  paymentInput.value = "";
 
-maxTeams.value = "";
+  maxTeams.value = "";
 
   registrationOpen.checked = true;
 
   activeTournament.checked = false;
 
-  alert("Tournament deleted.");
 
-  loadTournaments();
+  alert(
+    "Tournament deleted."
+  );
+
+
+  await loadTournaments();
 
 };
+
