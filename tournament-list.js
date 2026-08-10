@@ -185,7 +185,7 @@ async function loadTournaments() {
             <strong>💰 FEE</strong>
 
             <span>
-              ৳${data.fee || 0}
+              ${data.fee || 0} ৳
             </span>
 
           </div>
