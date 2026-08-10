@@ -32,9 +32,6 @@ onSnapshot(q, (snapshot) => {
           No posts available yet.
         </p>
 
-        <a href="dashboard.html" class="back-btn">
-          ⬅️ Back to Dashboard
-        </a>
       </div>
     `;
 
