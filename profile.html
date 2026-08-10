@@ -238,7 +238,7 @@ padding:16px;
 
 </div>
 
-<script type="module">
+<<script type="module">
 
 import { auth } from "./firebase.js";
 
@@ -247,6 +247,12 @@ signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+const confirmLogout = confirm("Are you sure you want to log out?");
+
+if(!confirmLogout){
+return;
+}
 
 try{
 
