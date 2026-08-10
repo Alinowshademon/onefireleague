@@ -71,9 +71,7 @@ onSnapshot(q, (snapshot) => {
 
   html += `
 
-    <a href="dashboard.html" class="back-btn">
-      ⬅️ Back to Dashboard
-    </a>
+    
 
     </div>
   `;
