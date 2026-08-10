@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>∆NE FIRE LEAGUE | Tournaments</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0a1220;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:430px;
+min-height:850px;
+background:#1b2740;
+border-radius:28px;
+padding:30px 22px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+h1{
+font-size:30px;
+color:#18cfff;
+margin-bottom:8px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+h2{
+font-size:22px;
+color:#ffd633;
+margin-bottom:20px;
+}
+
+/* ===============================
+   TOURNAMENT LIST
+================================ */
+
+#tournamentList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+height:600px;
+
+overflow-y:auto;
+
+padding:5px;
+
+scroll-behavior:smooth;
+
+}
+
+/* Scrollbar */
+
+#tournamentList::-webkit-scrollbar{
+width:5px;
+}
+
+#tournamentList::-webkit-scrollbar-track{
+background:#132033;
+border-radius:10px;
+}
+
+#tournamentList::-webkit-scrollbar-thumb{
+background:#19c7f7;
+border-radius:10px;
+}
+
+/* ===============================
+   TOURNAMENT CARD
+================================ */
+
+.tournament-card{
+
+background:#24334d;
+
+border:2px solid #19c7f7;
+
+border-radius:20px;
+
+padding:20px;
+
+text-align:left;
+
+box-shadow:0 0 15px rgba(0,200,255,.15);
+
+transition:.25s;
+
+flex-shrink:0;
+
+}
+
+.tournament-card:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 0 22px rgba(0,200,255,.3);
+
+}
+
+.tournament-card h3{
+
+color:#18cfff;
+
+font-size:21px;
+
+text-align:center;
+
+margin-bottom:15px;
+
+text-shadow:0 0 8px rgba(24,207,255,.4);
+
+}
+
+/* ===============================
+   TOURNAMENT INFO
+================================ */
+
+.tournament-info{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:10px;
+
+margin-bottom:15px;
+
+}
+
+.info-item{
+
+background:#1b2740;
+
+border-radius:12px;
+
+padding:10px;
+
+font-size:14px;
+
+color:#d5e4ef;
+
+}
+
+.info-item strong{
+
+display:block;
+
+color:#18cfff;
+
+font-size:12px;
+
+margin-bottom:4px;
+
+}
+
+.info-item span{
+
+color:#fff;
+
+font-weight:bold;
+
+}
+
+/* ===============================
+   REGISTERED
+================================ */
+
+.registered-box{
+
+padding:12px;
+
+background:#1b2740;
+
+border-radius:12px;
+
+text-align:center;
+
+border:1px solid rgba(25,199,247,.35);
+
+}
+
+.registered-box strong{
+
+color:#18cfff;
+
+}
+
+.registered-count{
+
+color:#fff;
+
+font-size:17px;
+
+font-weight:bold;
+
+}
+
+/* ===============================
+   REGISTER BUTTON
+================================ */
+
+.register-btn{
+
+width:100%;
+
+padding:15px;
+
+margin-top:15px;
+
+border:none;
+
+border-radius:14px;
+
+background:#19c7f7;
+
+color:#07111d;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:0 6px 18px rgba(0,200,255,.3);
+
+}
+
+.register-btn:hover{
+
+background:#32d5ff;
+
+transform:translateY(-2px);
+
+box-shadow:0 0 20px #19c7f7;
+
+}
+
+.register-btn:active{
+
+transform:scale(.97);
+
+}
+
+/* ===============================
+   LOADING
+================================ */
+
+.loading{
+
+color:#d5e4ef;
+
+font-size:16px;
+
+padding:25px 10px;
+
+}
+
+/* ===============================
+   NO TOURNAMENTS
+================================ */
+
+.no-tournaments{
+
+background:#24334d;
+
+border:2px solid #19c7f7;
+
+border-radius:18px;
+
+padding:20px;
+
+color:#d5e4ef;
+
+line-height:1.6;
+
+}
+
+/* ===============================
+   BACK BUTTON
+================================ */
+
+.back-btn{
+
+width:100%;
+
+padding:15px;
+
+margin-top:22px;
+
+border:none;
+
+border-radius:14px;
+
+background:#24334d;
+
+border:2px solid #19c7f7;
+
+color:#18cfff;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.back-btn:hover{
+
+background:#19c7f7;
+
+color:#07111d;
+
+}
+
+/* ===============================
+   FOOTER
+================================ */
+
+.footer{
+
+margin-top:20px;
+
+font-size:14px;
+
+color:#9fb1c3;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+🏆 ∆NE FIRE LEAGUE 🏆
+</h1>
+
+<h2>
+🔥 Available Tournaments
+</h2>
+
+<div id="tournamentList">
+
+<div class="loading">
+
+Loading tournaments...
+
+</div>
+
+</div>
+
+<button
+class="back-btn"
+onclick="location.href='dashboard.html'">
+
+⬅️ Back to Dashboard
+
+</button>
+
+<div class="footer">
+
+© 2026 ∆NE FIRE LEAGUE
+
+</div>
+
+</div>
+
+<script
+type="module"
+src="tournament-list.js">
+</script>
+
+</body>
+
+</html>
