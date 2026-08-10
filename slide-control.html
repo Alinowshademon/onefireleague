@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>∆NE FIRE LEAGUE | Slide Control</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0a1220;
+color:#fff;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:700px;
+margin:auto;
+padding-bottom:40px;
+}
+
+/* HEADER */
+
+.header{
+background:#1b2740;
+border-radius:22px;
+padding:25px;
+margin-bottom:25px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+}
+
+.header h1{
+color:#18cfff;
+font-size:28px;
+text-shadow:0 0 15px rgba(24,207,255,.7);
+margin-bottom:8px;
+}
+
+.header p{
+color:#9fb1c3;
+font-size:14px;
+}
+
+/* CONTROL CARD */
+
+.control-card{
+background:#1b2740;
+border-radius:22px;
+padding:25px;
+box-shadow:0 0 25px rgba(0,195,255,.18);
+margin-bottom:25px;
+}
+
+.control-card h2{
+color:#ffd633;
+font-size:21px;
+margin-bottom:18px;
+}
+
+label{
+display:block;
+color:#b8c7d6;
+font-size:14px;
+margin-bottom:8px;
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+outline:none;
+border-radius:12px;
+background:#0d1829;
+color:#fff;
+font-size:15px;
+border:1px solid rgba(24,207,255,.25);
+margin-bottom:15px;
+}
+
+input:focus{
+border-color:#18cfff;
+box-shadow:0 0 10px rgba(24,207,255,.2);
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:13px;
+background:#19c7f7;
+color:#07111d;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+box-shadow:0 6px 18px rgba(0,200,255,.3);
+}
+
+button:hover{
+background:#32d5ff;
+transform:translateY(-2px);
+}
+
+button:active{
+transform:scale(.97);
+}
+
+/* SLIDE LIST */
+
+.slides-title{
+color:#18cfff;
+font-size:22px;
+margin-bottom:15px;
+}
+
+.slide-card{
+background:#1b2740;
+border-radius:20px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 0 20px rgba(0,195,255,.12);
+}
+
+.slide-number{
+color:#ffd633;
+font-weight:bold;
+font-size:16px;
+margin-bottom:12px;
+}
+
+.slide-image{
+width:100%;
+max-height:300px;
+object-fit:cover;
+border-radius:14px;
+display:block;
+margin-bottom:14px;
+background:#0d1829;
+}
+
+.slide-url{
+color:#9fb1c3;
+font-size:12px;
+word-break:break-all;
+line-height:1.5;
+margin-bottom:15px;
+}
+
+.slide-actions{
+display:flex;
+gap:10px;
+}
+
+.slide-actions button{
+flex:1;
+}
+
+.edit-btn{
+background:#ffd633;
+color:#07111d;
+}
+
+.edit-btn:hover{
+background:#ffe66b;
+}
+
+.delete-btn{
+background:#ea5455;
+color:#fff;
+}
+
+.delete-btn:hover{
+background:#ff6b6b;
+}
+
+/* EMPTY */
+
+.empty{
+text-align:center;
+padding:35px 20px;
+color:#9fb1c3;
+background:#1b2740;
+border-radius:20px;
+}
+
+/* LOADING */
+
+.loading{
+text-align:center;
+color:#18cfff;
+padding:25px;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+body{
+padding:12px;
+}
+
+.header{
+padding:20px 15px;
+}
+
+.header h1{
+font-size:24px;
+}
+
+.control-card{
+padding:20px;
+}
+
+.slide-card{
+padding:15px;
+}
+
+.slide-actions{
+flex-direction:column;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<h1>🖼️ Slide Control</h1>
+
+<p>
+Manage the slides displayed across the website
+</p>
+
+</div>
+
+
+<!-- ADD SLIDE -->
+
+<div class="control-card">
+
+<h2>➕ Add New Slide</h2>
+
+<label for="slideUrl">
+Image URL
+</label>
+
+<input
+  type="url"
+  id="slideUrl"
+  placeholder="Paste image URL here..."
+>
+
+<button id="addSlideBtn">
+➕ Publish Slide
+</button>
+
+</div>
+
+
+<!-- EXISTING SLIDES -->
+
+<h2 class="slides-title">
+📚 Published Slides
+</h2>
+
+<div id="slidesContainer">
+
+<div class="loading">
+Loading slides...
+</div>
+
+</div>
+
+</div>
+
+
+<script type="module" src="slide-control.js"></script>
+
+</body>
+
+</html>
