@@ -107,6 +107,20 @@ box-shadow:0 0 20px #19c7f7;
 button:active{
 transform:scale(.97);
 }
+
+/* Logout Button */
+
+.logout-btn{
+background:#ff4d5a;
+color:#ffffff;
+box-shadow:0 6px 18px rgba(255,77,90,.30);
+}
+
+.logout-btn:hover{
+background:#ff6670;
+box-shadow:0 0 20px #ff4d5a;
+}
+
 /* Fixed Bottom Navigation */
 
 .bottom-nav{
@@ -138,6 +152,7 @@ transition:.2s;
 background:rgba(25,199,247,.12);
 transform:scale(1.08);
 }
+
 .footer{
 margin-top:18px;
 font-size:14px;
@@ -197,11 +212,14 @@ padding:16px;
 ✏️ Edit Profile
 </button>
 
-
+<button class="logout-btn" id="logoutBtn">
+🚪 Log Out
+</button>
 
 <div class="footer">
 © 2026 ∆NE FIRE LEAGUE
 </div>
+
 <nav class="bottom-nav">
 
 <a href="mainpage.html" title="News Feed">
@@ -217,7 +235,36 @@ padding:16px;
 </a>
 
 </nav>
+
 </div>
+
+<script type="module">
+
+import { auth } from "./firebase.js";
+
+import {
+signOut
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+try{
+
+await signOut(auth);
+
+window.location.href = "index.html";
+
+}catch(error){
+
+console.error("Logout error:", error);
+
+alert("Failed to log out. Please try again.");
+
+}
+
+});
+
+</script>
 
 <script type="module" src="profile.js"></script>
 
