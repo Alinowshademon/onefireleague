@@ -26,7 +26,7 @@
 body{
     background:url("onebg1.jpg") center center/cover no-repeat fixed;
     min-height:100vh;
-    padding:30px 20px 100px;
+    padding:90px 20px 100px;
     position:relative;
     color:white;
 }
@@ -37,6 +37,38 @@ body::before{
     inset:0;
     background:rgba(10,18,32,.65);
     z-index:-1;
+}
+
+
+/* =================================
+   FIXED TOP HEADER
+================================= */
+
+.top-header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:65px;
+
+    background:#1b2740;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:0 5px 20px rgba(0,195,255,.18);
+
+    z-index:1500;
+}
+
+.top-header h1{
+    color:#18cfff;
+    font-size:26px;
+    font-weight:bold;
+    margin:0;
+
+    text-shadow:0 0 15px rgba(24,207,255,.7);
 }
 
 
@@ -114,8 +146,6 @@ body::before{
     color:#9fb1c3;
     font-size:14px;
 }
-
-
 /* =================================
    DASHBOARD CONTAINER
 ================================= */
@@ -129,14 +159,6 @@ body::before{
     padding:35px 25px;
     text-align:center;
     box-shadow:0 0 25px rgba(0,195,255,.18);
-}
-
-h1{
-    color:#18cfff;
-    font-size:34px;
-    font-weight:bold;
-    margin-bottom:8px;
-    text-shadow:0 0 15px rgba(24,207,255,.7);
 }
 
 #welcome{
@@ -271,8 +293,6 @@ button:active{
 .whatsapp-button span{
     font-size:20px;
 }
-
-
 /* =================================
    MOBILE
 ================================= */
@@ -280,7 +300,15 @@ button:active{
 @media(max-width:480px){
 
     body{
-        padding:20px 15px 100px;
+        padding:85px 15px 100px;
+    }
+
+    .top-header{
+        height:60px;
+    }
+
+    .top-header h1{
+        font-size:22px;
     }
 
     .slider-wrapper{
@@ -294,10 +322,6 @@ button:active{
     .container{
         padding:30px 20px;
         border-radius:24px;
-    }
-
-    h1{
-        font-size:28px;
     }
 
     #welcome{
@@ -319,12 +343,29 @@ button:active{
 
 }
 
+
+/* =================================
+   END CSS
+================================= */
+
 </style>
 
 </head>
 
+
 <body>
-  <!-- =================================
+
+
+<!-- =================================
+     FIXED TOP HEADER
+================================= -->
+
+<header class="top-header">
+
+    <h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
+
+</header>
+<!-- =================================
      SEPARATE SLIDER CONTAINER
 ================================= -->
 
@@ -352,8 +393,6 @@ button:active{
 ================================= -->
 
 <div class="container">
-
-    <h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
 
     <h2 id="welcome">
         Welcome Player
@@ -410,11 +449,18 @@ button:active{
     </button>
 
 
+    <button onclick="logout()">
+        🚪 Logout
+    </button>
+
+
     <div class="footer">
         © 2026 ∆NE FIRE LEAGUE
     </div>
 
 </div>
+
+
 <!-- =================================
      BOTTOM NAVIGATION
 ================================= -->
@@ -479,6 +525,8 @@ button:active{
     <span>💬</span>
     WhatsApp
 </a>
+
+
 <!-- =================================
      DASHBOARD SLIDER SCRIPT
 ================================= -->
@@ -497,7 +545,19 @@ button:active{
      LOGOUT
 ================================= -->
 
+<script>
 
+function logout(){
+
+    if(confirm("Are you sure you want to logout?")){
+
+        window.location.href="index.html";
+
+    }
+
+}
+
+</script>
 
 
 </body>
