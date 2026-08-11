@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>∆NE FIRE LEAGUE | Player Profile</title>
+
 
 <style>
 
@@ -20,7 +25,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
-padding:20px;
+padding:90px 20px 100px;
 position:relative;
 }
 
@@ -35,6 +40,43 @@ background:rgba(10,18,32,.65);
 z-index:-1;
 }
 
+
+/* =================================
+   FIXED TOP HEADER
+================================= */
+
+.top-header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:65px;
+
+background:#1b2740;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+box-shadow:0 5px 20px rgba(0,195,255,.18);
+
+z-index:2000;
+}
+
+.top-header h1{
+color:#18cfff;
+font-size:26px;
+font-weight:bold;
+margin:0;
+
+text-shadow:0 0 15px rgba(24,207,255,.7);
+}
+
+
+/* =================================
+   PROFILE CONTAINER
+================================= */
+
 .container{
 width:100%;
 max-width:430px;
@@ -45,19 +87,15 @@ text-align:center;
 box-shadow:0 0 25px rgba(0,195,255,.18);
 }
 
-h1{
-color:#18cfff;
-font-size:32px;
-font-weight:bold;
-margin-bottom:10px;
-text-shadow:0 0 15px rgba(24,207,255,.7);
-}
-
 h2{
 color:#ffd633;
 margin-bottom:25px;
 font-size:24px;
 }
+
+/* =================================
+   PROFILE CARD
+================================= */
 
 .profile-card{
 background:#24334d;
@@ -83,18 +121,27 @@ color:#ffffff;
 font-weight:bold;
 }
 
+
+/* =================================
+   BUTTONS
+================================= */
+
 button{
 width:100%;
 margin:12px 0;
 padding:17px;
 border:none;
 border-radius:15px;
+
 background:#19c7f7;
 color:#07111d;
+
 font-size:18px;
 font-weight:bold;
+
 cursor:pointer;
 transition:.25s;
+
 box-shadow:0 6px 18px rgba(0,200,255,.35);
 }
 
@@ -108,7 +155,10 @@ button:active{
 transform:scale(.97);
 }
 
-/* Logout Button */
+
+/* =================================
+   LOGOUT BUTTON
+================================= */
 
 .logout-btn{
 background:#ff4d5a;
@@ -121,7 +171,10 @@ background:#ff6670;
 box-shadow:0 0 20px #ff4d5a;
 }
 
-/* Fixed Bottom Navigation */
+
+/* =================================
+   FIXED BOTTOM NAVIGATION
+================================= */
 
 .bottom-nav{
 position:fixed;
@@ -129,22 +182,29 @@ bottom:0;
 left:0;
 width:100%;
 height:65px;
+
 background:#1b2740;
+
 display:flex;
 justify-content:space-around;
 align-items:center;
+
 box-shadow:0 -5px 20px rgba(0,195,255,.18);
+
 z-index:1500;
 }
 
 .bottom-nav a{
 text-decoration:none;
 font-size:28px;
+
 width:33.33%;
 height:100%;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
 transition:.2s;
 }
 
@@ -153,126 +213,204 @@ background:rgba(25,199,247,.12);
 transform:scale(1.08);
 }
 
+
+/* =================================
+   FOOTER
+================================= */
+
 .footer{
 margin-top:18px;
 font-size:14px;
 color:#b8c7d6;
 }
 
+/* =================================
+   MOBILE
+================================= */
+
 @media(max-width:480px){
 
-.container{
-padding:30px 20px;
+    body{
+        padding:80px 15px 100px;
+    }
+
+    .top-header{
+        height:60px;
+    }
+
+    .top-header h1{
+        font-size:22px;
+    }
+
+    .container{
+        padding:30px 20px;
+        border-radius:24px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    .profile-card p{
+        font-size:17px;
+    }
+
+    button{
+        font-size:17px;
+        padding:16px;
+    }
+
 }
 
-h1{
-font-size:28px;
-}
 
-h2{
-font-size:22px;
-}
-
-.profile-card p{
-font-size:17px;
-}
-
-button{
-font-size:17px;
-padding:16px;
-}
-
-}
+/* =================================
+   END CSS
+================================= */
 
 </style>
 
 </head>
 
+
 <body>
+
+
+<!-- =================================
+     FIXED TOP HEADER
+================================= -->
+
+<header class="top-header">
+
+    <h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
+
+</header>
+
+<!-- =================================
+     PROFILE CONTAINER
+================================= -->
 
 <div class="container">
 
-<h1>👤 Player Profile</h1>
 
-<h2 id="playerName">Loading...</h2>
+    <h2 id="playerName">
+        Loading...
+    </h2>
 
-<div class="profile-card">
 
-<p><strong>🎮 IGN:</strong> <span id="ign"></span></p>
+    <div class="profile-card">
 
-<p><strong>🆔 Free Fire UID:</strong> <span id="ffuid"></span></p>
+        <p>
+            <strong>🎮 IGN:</strong>
+            <span id="ign"></span>
+        </p>
 
-<p><strong>🌍 Address:</strong> <span id="country"></span></p>
+        <p>
+            <strong>🆔 Free Fire UID:</strong>
+            <span id="ffuid"></span>
+        </p>
 
-<p><strong>📱 Phone:</strong> <span id="phone"></span></p>
+        <p>
+            <strong>🌍 Address:</strong>
+            <span id="country"></span>
+        </p>
+
+        <p>
+            <strong>📱 Phone:</strong>
+            <span id="phone"></span>
+        </p>
+
+    </div>
+
+
+    <button onclick="location.href='edit-profile.html'">
+        ✏️ Edit Profile
+    </button>
+
+
+    <button class="logout-btn" id="logoutBtn">
+        🚪 Log Out
+    </button>
+
+
+    <div class="footer">
+        © 2026 ∆NE FIRE LEAGUE
+    </div>
+
 
 </div>
 
-<button onclick="location.href='edit-profile.html'">
-✏️ Edit Profile
-</button>
 
-<button class="logout-btn" id="logoutBtn">
-🚪 Log Out
-</button>
-
-<div class="footer">
-© 2026 ∆NE FIRE LEAGUE
-</div>
+<!-- =================================
+     BOTTOM NAVIGATION
+================================= -->
 
 <nav class="bottom-nav">
 
-<a href="mainpage.html" title="News Feed">
-📰
-</a>
+    <a href="mainpage.html" title="News Feed">
+        📰
+    </a>
 
-<a href="dashboard.html" title="Dashboard">
-🏆
-</a>
+    <a href="dashboard.html" title="Dashboard">
+        🏆
+    </a>
 
-<a href="profile.html" title="Profile">
-👤
-</a>
+    <a href="profile.html" title="Profile">
+        👤
+    </a>
 
 </nav>
 
-</div>
 
-<<script type="module">
+<!-- =================================
+     LOGOUT SCRIPT
+================================= -->
+
+<script type="module">
 
 import { auth } from "./firebase.js";
 
 import {
-signOut
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
 
-const confirmLogout = confirm("Are you sure you want to log out?");
+    const confirmLogout = confirm(
+        "Are you sure you want to log out?"
+    );
 
-if(!confirmLogout){
-return;
-}
+    if(!confirmLogout){
+        return;
+    }
 
-try{
+    try{
 
-await signOut(auth);
+        await signOut(auth);
 
-window.location.href = "index.html";
+        window.location.href = "index.html";
 
-}catch(error){
+    }catch(error){
 
-console.error("Logout error:", error);
+        console.error("Logout error:", error);
 
-alert("Failed to log out. Please try again.");
+        alert("Failed to log out. Please try again.");
 
-}
+    }
 
 });
 
+
 </script>
+
+
+<!-- =================================
+     PROFILE SCRIPT
+================================= -->
 
 <script type="module" src="profile.js"></script>
 
+
 </body>
+
 </html>
