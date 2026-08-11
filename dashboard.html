@@ -146,6 +146,8 @@ body::before{
     color:#9fb1c3;
     font-size:14px;
 }
+
+
 /* =================================
    DASHBOARD CONTAINER
 ================================= */
@@ -216,7 +218,7 @@ button:active{
     height:65px;
     background:#1b2740;
     display:flex;
-    justify-content:space-around;
+    justify-content:center;
     align-items:center;
     box-shadow:0 -5px 20px rgba(0,195,255,.18);
     z-index:1500;
@@ -225,7 +227,7 @@ button:active{
 .bottom-nav a{
     text-decoration:none;
     font-size:28px;
-    width:33.33%;
+    width:100%;
     height:100%;
     display:flex;
     justify-content:center;
@@ -239,60 +241,6 @@ button:active{
 }
 
 
-/* =================================
-   FLOATING CONTACT BUTTONS
-================================= */
-
-.telegram-button,
-.messenger-button,
-.whatsapp-button{
-    position:fixed;
-    left:20px;
-
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:12px 18px;
-    border-radius:30px;
-
-    color:white;
-    font-size:15px;
-    font-weight:bold;
-    text-decoration:none;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.3);
-
-    z-index:2000;
-    transition:.2s;
-}
-
-.telegram-button{
-    bottom:185px;
-    background:#229ED9;
-}
-
-.messenger-button{
-    bottom:130px;
-    background:#0084FF;
-}
-
-.whatsapp-button{
-    bottom:75px;
-    background:#25D366;
-}
-
-.telegram-button:hover,
-.messenger-button:hover,
-.whatsapp-button:hover{
-    transform:scale(1.05);
-}
-
-.telegram-button span,
-.messenger-button span,
-.whatsapp-button span{
-    font-size:20px;
-}
 /* =================================
    MOBILE
 ================================= */
@@ -333,14 +281,6 @@ button:active{
         padding:16px;
     }
 
-    .telegram-button,
-    .messenger-button,
-    .whatsapp-button{
-        left:12px;
-        padding:10px 14px;
-        font-size:14px;
-    }
-
 }
 
 
@@ -365,6 +305,8 @@ button:active{
     <h1>🏆 ∆NE FIRE LEAGUE 🏆</h1>
 
 </header>
+
+
 <!-- =================================
      SEPARATE SLIDER CONTAINER
 ================================= -->
@@ -399,11 +341,6 @@ button:active{
     </h2>
 
 
-    <button onclick="location.href='profile.html'">
-        👤 My Profile
-    </button>
-
-
     <button onclick="location.href='tournament-list.html'">
         📝 Tournaments
     </button>
@@ -429,11 +366,6 @@ button:active{
     </button>
 
 
-    <button onclick="location.href='mainpage.html'">
-        📰 News Feed
-    </button>
-
-
     <button onclick="location.href='download.html'">
         📱 Download App
     </button>
@@ -446,11 +378,6 @@ button:active{
 
     <button onclick="location.href='contact-us.html'">
         📞 Contact us
-    </button>
-
-
-    <button onclick="logout()">
-        🚪 Logout
     </button>
 
 
@@ -483,51 +410,6 @@ button:active{
 
 
 <!-- =================================
-     TELEGRAM
-================================= -->
-
-<a
-    href="https://t.me/onefireleague"
-    class="telegram-button"
-    target="_blank"
-    rel="noopener"
->
-    <span>✈</span>
-    Telegram
-</a>
-
-
-<!-- =================================
-     MESSENGER
-================================= -->
-
-<a
-    href="https://m.me/onefireleague129"
-    class="messenger-button"
-    target="_blank"
-    rel="noopener"
->
-    <span>💬</span>
-    Messenger
-</a>
-
-
-<!-- =================================
-     WHATSAPP
-================================= -->
-
-<a
-    href="https://wa.me/8801973391882?text=Hello,%20Are%20you%20available%20to%20chat%20chat?%20"
-    class="whatsapp-button"
-    target="_blank"
-    rel="noopener"
->
-    <span>💬</span>
-    WhatsApp
-</a>
-
-
-<!-- =================================
      DASHBOARD SLIDER SCRIPT
 ================================= -->
 
@@ -539,25 +421,6 @@ button:active{
 ================================= -->
 
 <script type="module" src="dashboard.js"></script>
-
-
-<!-- =================================
-     LOGOUT
-================================= -->
-
-<script>
-
-function logout(){
-
-    if(confirm("Are you sure you want to logout?")){
-
-        window.location.href="index.html";
-
-    }
-
-}
-
-</script>
 
 
 </body>
