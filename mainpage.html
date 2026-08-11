@@ -1,374 +1,592 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>∆NE FIRE LEAGUE | News Feed</title>
+
 
 <style>
 
+/* =================================
+   GLOBAL
+================================= */
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:#0a1220;
-color:#fff;
-min-height:100vh;
+    background:#0a1220;
+    color:#fff;
+    min-height:100vh;
+
+    padding-top:85px;
+    padding-bottom:100px;
 }
+
+
+/* =================================
+   FIXED TOP HEADER
+================================= */
 
 header{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px;
-background:#1b2740;
-box-shadow:0 0 20px rgba(0,195,255,.18);
-z-index:1000;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#1b2740;
+
+    box-shadow:0 5px 20px rgba(0,195,255,.18);
+
+    z-index:1500;
 }
 
 header h2{
-color:#18cfff;
-font-size:30px;
-text-shadow:0 0 15px rgba(24,207,255,.7);
+    color:#18cfff;
+    font-size:26px;
+    font-weight:bold;
+
+    text-shadow:0 0 15px rgba(24,207,255,.7);
 }
 
-#menuBtn{
-background:#19c7f7;
-color:#07111d;
-border:none;
-padding:12px 18px;
-border-radius:12px;
-font-size:22px;
-font-weight:bold;
-cursor:pointer;
-transition:.25s;
-box-shadow:0 5px 15px rgba(0,200,255,.35);
+
+/* =================================
+   SEPARATE SLIDER CONTAINER
+================================= */
+
+.slider-wrapper{
+    width:100%;
+    max-width:720px;
+
+    margin:20px auto 25px;
+
+    padding:0 15px;
 }
 
-#menuBtn:hover{
-background:#32d5ff;
-transform:scale(1.05);
-box-shadow:0 0 20px #19c7f7;
+.slide-container{
+    width:100%;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:22px;
+
+    background:#0d1829;
+
+    box-shadow:0 0 25px rgba(0,195,255,.20);
 }
 
-#feed {
-    width: 100%;
-    max-width: 720px;
-    margin: 110px auto 30px;
-    padding: 0 15px;
+.slide-track{
+    display:flex;
+
+    width:100%;
+
+    transition:transform .5s ease;
+
+    touch-action:pan-y;
 }
 
-.news-card {
-    background: #1b2740;
-    border-radius: 25px;
-    padding: 25px;
-    margin: 30px auto;
-    max-width: 650px;
-    box-shadow: 0 0 25px rgba(0, 195, 255, .18);
-}
-.news-card {
-    background: #1b2740;
-    border-radius: 25px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 25px rgba(0, 195, 255, .18);
-    width: 100%;
+.slide-item{
+    flex:0 0 100%;
+
+    width:100%;
+
+    aspect-ratio:16 / 9;
 }
 
-.news-card h3{
-color:#ffd633;
-margin:20px 0 15px;
-font-size:22px;
+.slide-item img{
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    object-fit:cover;
 }
 
-.media-box {
-    border: 2px solid #19c7f7;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 0 18px rgba(0, 200, 255, .25);
-    margin-top: 15px;
+.slide-dots{
+    position:absolute;
+
+    bottom:10px;
+    left:0;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:7px;
+
+    z-index:5;
 }
 
-.media-box img,
-.media-box video {
-    width: 100%;
-    display: block;
-    border-radius: 15px;
+.slide-dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.45);
+
+    transition:.3s;
 }
 
-.back-btn{
-display:block;
-width:100%;
-padding:17px;
-margin-top:20px;
-text-align:center;
-text-decoration:none;
-background:#19c7f7;
-color:#07111d;
-font-size:18px;
-font-weight:bold;
-border-radius:15px;
-transition:.25s;
-box-shadow:0 6px 18px rgba(0,200,255,.35);
+.slide-dot.active{
+    background:#18cfff;
+
+    box-shadow:0 0 8px #18cfff;
+
+    transform:scale(1.2);
 }
 
-.back-btn:hover{
-background:#32d5ff;
-transform:translateY(-3px);
-box-shadow:0 0 20px #19c7f7;
-}
-/* Fixed Bottom Navigation */
+.slide-loading{
+    width:100%;
 
-.bottom-nav{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-height:65px;
-background:#1b2740;
-display:flex;
-justify-content:space-around;
-align-items:center;
-box-shadow:0 -5px 20px rgba(0,195,255,.18);
-z-index:1500;
+    aspect-ratio:16 / 9;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#9fb1c3;
+
+    font-size:14px;
 }
 
-.bottom-nav a{
-text-decoration:none;
-font-size:28px;
-width:33.33%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-transition:.2s;
-}
 
-.bottom-nav a:hover{
-background:rgba(25,199,247,.12);
-transform:scale(1.08);
-}
-footer{
-text-align:center;
-padding:25px;
-color:#9fb1c3;
-font-size:14px;
-}
-/* Side Menu */
+/* =================================
+   NEWS FEED
+================================= */
 
-.menu-overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.45);
-display:none;
-justify-content:flex-end;
-z-index:2000;
-}
+#feed{
+    width:100%;
 
-.menu{
-width:260px;
-height:100%;
-background:#1b2740;
-padding:30px 20px;
-box-shadow:-5px 0 20px rgba(0,195,255,.25);
-animation:slide .25s ease;
-}
+    max-width:720px;
 
-@keyframes slide{
-from{
-transform:translateX(100%);
-}
-to{
-transform:translateX(0);
-}
-}
+    margin:25px auto 30px;
 
-.menu h3{
-color:#18cfff;
-text-align:center;
-margin-bottom:25px;
-font-size:24px;
-}
-
-.menu a{
-display:block;
-text-decoration:none;
-background:#19c7f7;
-color:#07111d;
-padding:15px;
-margin-bottom:15px;
-border-radius:12px;
-font-weight:bold;
-text-align:center;
-transition:.25s;
-}
-
-.menu a:hover{
-background:#32d5ff;
-}
-
-.close{
-background:#ff5c5c !important;
-color:white !important;
-}
-@media(max-width:768px){
-
-header h2{
-font-size:24px;
+    padding:0 15px;
 }
 
 .news-card{
-padding:20px;
-}
+    background:#1b2740;
 
-.news-card h1{
-font-size:28px;
+    border-radius:25px;
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 0 25px rgba(0,195,255,.18);
+
+    width:100%;
 }
 
 .news-card h3{
-font-size:20px;
+    color:#ffd633;
+
+    margin:20px 0 15px;
+
+    font-size:22px;
 }
 
-.video-box iframe{
-height:230px;
+.media-box{
+    border:2px solid #19c7f7;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 0 18px rgba(0,200,255,.25);
+
+    margin-top:15px;
 }
+
+.media-box img,
+.media-box video{
+    width:100%;
+
+    display:block;
+
+    border-radius:15px;
+}
+
+
+/* =================================
+   BACK BUTTON
+================================= */
+
+.back-btn{
+    display:block;
+
+    width:100%;
+
+    padding:17px;
+
+    margin-top:20px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    background:#19c7f7;
+
+    color:#07111d;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    border-radius:15px;
+
+    transition:.25s;
+
+    box-shadow:0 6px 18px rgba(0,200,255,.35);
+}
+
+.back-btn:hover{
+    background:#32d5ff;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 0 20px #19c7f7;
+}
+
+
+/* =================================
+   FIXED BOTTOM NAVIGATION
+================================= */
+
+.bottom-nav{
+    position:fixed;
+
+    bottom:0;
+    left:0;
+
+    width:100%;
+    height:65px;
+
+    background:#1b2740;
+
+    display:flex;
+
+    justify-content:space-around;
+    align-items:center;
+
+    box-shadow:0 -5px 20px rgba(0,195,255,.18);
+
+    z-index:1500;
+}
+
+.bottom-nav a{
+    text-decoration:none;
+
+    font-size:28px;
+
+    width:33.33%;
+    height:100%;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    transition:.2s;
+}
+
+.bottom-nav a:hover{
+    background:rgba(25,199,247,.12);
+
+    transform:scale(1.08);
+}
+
+
+/* =================================
+   FOOTER
+================================= */
+
+footer{
+    text-align:center;
+
+    padding:25px;
+
+    color:#9fb1c3;
+
+    font-size:14px;
+}
+
+
+/* =================================
+   LOADER
+================================= */
+
 .loader{
-width:50px;
-height:50px;
-margin:25px auto;
-border:5px solid rgba(24,207,255,.25);
-border-top:5px solid #18cfff;
-border-radius:50%;
-animation:spin 1s linear infinite;
+    width:50px;
+    height:50px;
+
+    margin:25px auto;
+
+    border:5px solid rgba(24,207,255,.25);
+
+    border-top:5px solid #18cfff;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
 }
 
 @keyframes spin{
-100%{
-transform:rotate(360deg);
+
+    100%{
+        transform:rotate(360deg);
+    }
+
 }
-}
-}
+
+
+/* =================================
+   FACEBOOK POST
+================================= */
+
 .fb-post{
-display:flex;
-justify-content:center;
-align-items:center;
-margin:20px auto;
-width:100%;
-overflow:hidden;
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    margin:20px auto;
+
+    width:100%;
+
+    overflow:hidden;
 }
 
 .fb-post > span{
-display:block !important;
-max-width:100%;
-border-radius:18px;
-overflow:hidden;
+    display:block !important;
+
+    max-width:100%;
+
+    border-radius:18px;
+
+    overflow:hidden;
 }
 
 .fb-post iframe{
-display:block;
-max-width:100% !important;
-border:none !important;
-border-radius:18px;
+    display:block;
+
+    max-width:100% !important;
+
+    border:none !important;
+
+    border-radius:18px;
 }
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media(max-width:768px){
+
+    body{
+        padding-top:80px;
+
+        padding-bottom:100px;
+    }
+
+    header{
+        height:60px;
+    }
+
+    header h2{
+        font-size:22px;
+    }
+
+    .slider-wrapper{
+        margin-top:20px;
+
+        margin-bottom:20px;
+
+        padding:0 12px;
+    }
+
+    .slide-container{
+        border-radius:18px;
+    }
+
+    #feed{
+        margin-top:20px;
+
+        padding:0 12px;
+    }
+
+    .news-card{
+        padding:20px;
+
+        border-radius:22px;
+    }
+
+    .news-card h1{
+        font-size:28px;
+    }
+
+    .news-card h3{
+        font-size:20px;
+    }
+
+    .video-box iframe{
+        height:230px;
+    }
+
+}
+
+
+/* =================================
+   END CSS
+================================= */
+
 </style>
 
 </head>
 
+
 <body>
+
+<!-- =================================
+     FACEBOOK ROOT
+================================= -->
+
 <div id="fb-root"></div>
 
-<script async defer crossorigin="anonymous"
-src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v23.0"></script>
+
+<script
+    async
+    defer
+    crossorigin="anonymous"
+    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v23.0">
+</script>
+
+
+<!-- =================================
+     FIXED TOP HEADER
+================================= -->
+
 <header>
 
-<h2>📰 News Feed</h2>
-
-<button id="menuBtn">☰</button>
+    <h2>🏆 ∆NE FIRE LEAGUE 🏆</h2>
 
 </header>
-<div class="menu-overlay" id="menuOverlay">
 
-<div class="menu">
 
-<h3>Menu</h3>
+<!-- =================================
+     SEPARATE SLIDER
+================================= -->
 
-<a href="profile.html">👤 Profile</a>
+<div class="slider-wrapper">
 
-<a href="dashboard.html">🏠 Dashboard</a>
-<a href="tournament-list.html"> 📄 Tournaments </a>
-<a href="#" class="close" id="closeMenu">Close</a>
+    <div class="slide-container" id="slideContainer">
+
+        <div class="slide-track" id="slideTrack">
+
+            <div class="slide-loading">
+                Loading slides...
+            </div>
+
+        </div>
+
+        <div class="slide-dots" id="slideDots"></div>
+
+    </div>
+
 </div>
 
-</div>
+
+<!-- =================================
+     NEWS FEED
+================================= -->
+
 <div id="feed">
 
-<div class="news-card">
+    <div class="news-card">
 
-<h1>📰 Loading News Feed...</h1>
+        <h1>📰 Loading News Feed...</h1>
 
-<div class="loader"></div>
+        <div class="loader"></div>
 
-<p style="text-align:center;color:#9fb1c3;">
-    Fetching the latest posts...
-</p>
+        <p style="text-align:center;color:#9fb1c3;">
+            Fetching the latest posts...
+        </p>
+
+    </div>
 
 </div>
 
-</div>
-
-
+<!-- =================================
+     FOOTER
+================================= -->
 
 <footer>
-© 2026 ∆NE FIRE LEAGUE
+
+    © 2026 ∆NE FIRE LEAGUE
+
 </footer>
+
+
+<!-- =================================
+     BOTTOM NAVIGATION
+================================= -->
+
 <nav class="bottom-nav">
 
-<a href="mainpage.html" title="News Feed">
-📰
-</a>
+    <a href="mainpage.html" title="News Feed">
+        📰
+    </a>
 
-<a href="dashboard.html" title="Dashboard">
-🏆
-</a>
+    <a href="dashboard.html" title="Dashboard">
+        🏆
+    </a>
 
-<a href="profile.html" title="Profile">
-👤
-</a>
+    <a href="profile.html" title="Profile">
+        👤
+    </a>
 
 </nav>
-<script>
-const menuBtn = document.getElementById("menuBtn");
-const menuOverlay = document.getElementById("menuOverlay");
-const closeMenu = document.getElementById("closeMenu");
 
-menuBtn.onclick = () => {
-    menuOverlay.style.display = "flex";
-};
+<!-- =================================
+     SLIDER SCRIPT
+================================= -->
 
-closeMenu.onclick = (e) => {
-    e.preventDefault();
-    menuOverlay.style.display = "none";
-};
+<script type="module" src="dashboard-slides.js"></script>
 
-menuOverlay.onclick = (e) => {
-    if(e.target === menuOverlay){
-        menuOverlay.style.display = "none";
-    }
-};
-</script>
+
+<!-- =================================
+     NEWS FEED SCRIPT
+================================= -->
 
 <script type="module" src="mainpage.js"></script>
 
+
+<!-- =================================
+     CLOSE DOCUMENT
+================================= -->
+
 </body>
+
 </html>
