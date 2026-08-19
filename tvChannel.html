@@ -156,9 +156,163 @@ footer .credit a:hover { color: #fff; text-decoration: underline;}
     .ctrl-btn { font-size: 0.7rem; padding: 6px 12px; }
 }
 @media (max-width: 400px) { .channel-list { grid-template-columns: repeat(2, 1fr); } }
+
+/* ==============================
+   PASSCODE LOCK SCREEN
+============================== */
+#passcodeLock {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    padding: 20px;
+}
+
+.passcode-box {
+    width: 100%;
+    max-width: 360px;
+    background: #181818;
+    border: 2px solid var(--primary);
+    border-radius: 22px;
+    padding: 28px 22px;
+    box-shadow: 0 0 25px rgba(245,158,11,0.25);
+    text-align: center;
+}
+
+.passcode-box h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.passcode-box p {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+#passcodeDisplay {
+    width: 100%;
+    height: 52px;
+    background: #0d0d0d;
+    border: 1px solid #444;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    letter-spacing: 8px;
+    color: var(--primary);
+}
+
+.passcode-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.passcode-key {
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    background: #292929;
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.15s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.passcode-key:hover {
+    background: #383838;
+}
+
+.passcode-key:active {
+    transform: scale(0.94);
+    background: var(--primary);
+    color: #111;
+}
+
+.passcode-clear {
+    background: #4a2222;
+}
+
+.passcode-backspace {
+    background: #333;
+}
+
+.passcode-enter {
+    width: 100%;
+    margin-top: 10px;
+    background: var(--primary);
+    color: #111;
+}
+
+.passcode-enter:hover {
+    background: #fbbf24;
+}
+
+#passcodeError {
+    height: 18px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #ff4d4d;
+}
+
+@media (max-width: 400px) {
+    #passcodeLock {
+        padding: 15px;
+    }
+
+    .passcode-box {
+        padding: 24px 18px;
+    }
+}
+
 </style>
 </head>
 <body>
+
+
+<!-- =================================
+     PASSCODE LOCK SCREEN
+================================= -->
+<div id="passcodeLock">
+    <div class="passcode-box">
+        <h2>🔒 Enter Passcode</h2>
+        <p>Enter the passcode to continue</p>
+
+        <div id="passcodeDisplay"></div>
+
+        <div class="passcode-keypad">
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('1')">1</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('2')">2</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('3')">3</button>
+
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('4')">4</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('5')">5</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('6')">6</button>
+
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('7')">7</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('8')">8</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('9')">9</button>
+
+            <button type="button" class="passcode-key passcode-clear" onclick="clearPasscode()">CLEAR</button>
+            <button type="button" class="passcode-key" onclick="pressPasscodeKey('0')">0</button>
+            <button type="button" class="passcode-key passcode-backspace" onclick="backspacePasscode()">⌫</button>
+        </div>
+
+        <button type="button" class="passcode-key passcode-enter" onclick="checkPasscode()">ENTER</button>
+        <div id="passcodeError"></div>
+    </div>
+</div>
+
 
 <div class="overlay-bg" id="drawerBg"></div>
 <div class="info-drawer" id="infoDrawer">
@@ -1194,6 +1348,54 @@ footer .credit a:hover { color: #fff; text-decoration: underline;}
 </footer>
 
 <script>
+
+/* =================================
+   WEBSITE PASSCODE LOCK
+================================= */
+
+const correctPasscode = "129";
+let enteredPasscode = "";
+
+function pressPasscodeKey(number) {
+    if (enteredPasscode.length >= 12) return;
+
+    enteredPasscode += number;
+    document.getElementById("passcodeError").textContent = "";
+    updatePasscodeDisplay();
+}
+
+function updatePasscodeDisplay() {
+    document.getElementById("passcodeDisplay").textContent =
+        "•".repeat(enteredPasscode.length);
+}
+
+function clearPasscode() {
+    enteredPasscode = "";
+    document.getElementById("passcodeError").textContent = "";
+    updatePasscodeDisplay();
+}
+
+function backspacePasscode() {
+    enteredPasscode = enteredPasscode.slice(0, -1);
+    document.getElementById("passcodeError").textContent = "";
+    updatePasscodeDisplay();
+}
+
+function checkPasscode() {
+    const error = document.getElementById("passcodeError");
+
+    if (enteredPasscode === correctPasscode) {
+        document.getElementById("passcodeLock").remove();
+        document.body.style.overflow = "";
+    } else {
+        error.textContent = "Incorrect passcode";
+        enteredPasscode = "";
+        updatePasscodeDisplay();
+    }
+}
+
+updatePasscodeDisplay();
+
 const video = document.getElementById('videoPlayer');
 const wrap = document.getElementById('playerWrap');
 const ctrlOverlay = document.getElementById('ctrlOverlay');
