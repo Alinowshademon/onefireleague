@@ -275,6 +275,37 @@ footer .credit a:hover { color: #fff; text-decoration: underline;}
     }
 }
 
+
+/* ==============================
+   TV REMOTE FOCUS NAVIGATION
+============================== */
+button:focus,
+a:focus,
+input:focus,
+.ch-item:focus {
+    outline: 3px solid var(--primary) !important;
+    outline-offset: 3px;
+    box-shadow: 0 0 18px rgba(245,158,11,0.55) !important;
+}
+
+.ch-item:focus {
+    transform: scale(1.02);
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+
+.passcode-key:focus {
+    background: var(--primary);
+    color: #111;
+    transform: scale(1.04);
+}
+
+.cat-tab:focus {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
 </style>
 </head>
 <body>
@@ -326,7 +357,7 @@ footer .credit a:hover { color: #fff; text-decoration: underline;}
   Get pass code
 </button>
     </div>
-
+ 
 </div>
 
 
@@ -361,7 +392,7 @@ footer .credit a:hover { color: #fff; text-decoration: underline;}
         <div class="logo">
             <span class="logo-icon">✨</span>
             <div>
-                <div class="logo-text">∆NE</Sunny><span>Stream</span></div>
+                <div class="logo-text">∆NE<span>Stream</span></div>
                 <div class="logo-tag">Premium Vision</div>
             </div>
         </div>
@@ -1649,15 +1680,246 @@ list.addEventListener('touchend', () => {
     touchItem=null; 
 });
 
+/* =========================================
+   TV REMOTE / D-PAD FOCUS NAVIGATION
+   Arrow keys = move focus
+   Enter / OK = activate focused item
+   Escape / Back = close drawer/fullscreen
+========================================= */
+
+function isTVVisible(el) {
+    if (!el || el.disabled) return false;
+
+    const style = window.getComputedStyle(el);
+    if (style.display === 'none' ||
+        style.visibility === 'hidden' ||
+        style.opacity === '0') return false;
+
+    const rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+}
+
+function getTVFocusables() {
+    const lock = document.getElementById('passcodeLock');
+
+    // While the passcode screen is open, only navigate inside it.
+    if (lock) {
+        return [...lock.querySelectorAll(
+            'button, a[href], input, [tabindex="0"]'
+        )].filter(isTVVisible);
+    }
+
+    return [...document.querySelectorAll(
+        'button, a[href], input, [tabindex="0"], .ch-item'
+    )].filter(isTVVisible);
+}
+
+function focusFirstTVItem() {
+    const items = getTVFocusables();
+    if (!items.length) return;
+
+    // Prefer the first visible channel after unlocking.
+    const channel = items.find(el => el.classList.contains('ch-item'));
+    (channel || items[0]).focus({ preventScroll: false });
+}
+
+function moveTVFocus(direction) {
+    const items = getTVFocusables();
+    const current = document.activeElement;
+
+    if (!items.length) return;
+
+    if (!items.includes(current)) {
+        focusFirstTVItem();
+        return;
+    }
+
+    const currentRect = current.getBoundingClientRect();
+    const cx = currentRect.left + currentRect.width / 2;
+    const cy = currentRect.top + currentRect.height / 2;
+
+    let best = null;
+    let bestScore = Infinity;
+
+    items.forEach(candidate => {
+        if (candidate === current) return;
+
+        const r = candidate.getBoundingClientRect();
+        const x = r.left + r.width / 2;
+        const y = r.top + r.height / 2;
+
+        const dx = x - cx;
+        const dy = y - cy;
+
+        let primary;
+        let secondary;
+
+        if (direction === 'left') {
+            if (dx >= -2) return;
+            primary = -dx;
+            secondary = Math.abs(dy);
+        } else if (direction === 'right') {
+            if (dx <= 2) return;
+            primary = dx;
+            secondary = Math.abs(dy);
+        } else if (direction === 'up') {
+            if (dy >= -2) return;
+            primary = -dy;
+            secondary = Math.abs(dx);
+        } else {
+            if (dy <= 2) return;
+            primary = dy;
+            secondary = Math.abs(dx);
+        }
+
+        // Strongly prefer items that are aligned with the current item.
+        const score = primary + secondary * 1.35;
+
+        if (score < bestScore) {
+            bestScore = score;
+            best = candidate;
+        }
+    });
+
+    // If there is no item in that direction, stay where we are.
+    if (best) {
+        best.focus({ preventScroll: true });
+
+        // Keep the focused item visible in scrollable TV lists.
+        try {
+            best.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'nearest'
+            });
+        } catch (_) {}
+    }
+}
+
+function activateTVFocus() {
+    const current = document.activeElement;
+    if (!current) return;
+
+    if (current.matches('button, a[href], input, .ch-item')) {
+        current.click();
+    }
+}
+
+// Make channel cards keyboard/remote focusable.
+function setupTVChannelFocus() {
+    document.querySelectorAll('.ch-item[data-id]').forEach(item => {
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('role', 'button');
+    });
+}
+
+setupTVChannelFocus();
+
+// Start on the first passcode key while the lock is active.
+setTimeout(() => {
+    const lock = document.getElementById('passcodeLock');
+    if (lock) {
+        const firstKey = lock.querySelector('.passcode-key');
+        if (firstKey) firstKey.focus();
+    } else {
+        focusFirstTVItem();
+    }
+}, 100);
+
 document.addEventListener('keydown', e => {
-    const a = document.querySelector('.ch-item.active');
-    if (e.code==='Space' && a) { e.preventDefault(); togglePlayPause(e); }
-    if (e.code==='ArrowDown') { e.preventDefault(); const n=a?.nextElementSibling; if(n?.dataset.id) playChannel(n); }
-    if (e.code==='ArrowUp') { e.preventDefault(); const p=a?.previousElementSibling; if(p?.dataset.id) playChannel(p); }
-    if (e.key==='f'||e.key==='F') toggleFS(null);
-    if (e.key==='m'||e.key==='M') video.muted = !video.muted;
+
+    const key = e.key;
+
+    // TV D-pad navigation.
+    if (key === 'ArrowUp' ||
+        key === 'ArrowDown' ||
+        key === 'ArrowLeft' ||
+        key === 'ArrowRight') {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        moveTVFocus(key.replace('Arrow', '').toLowerCase());
+        showControls();
+        return;
+    }
+
+    // TV remote OK / Enter.
+    if (key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+
+        activateTVFocus();
+        showControls();
+        return;
+    }
+
+    // Space still toggles the player when a channel is active.
+    if (e.code === 'Space') {
+        const active = document.querySelector('.ch-item.active');
+        if (active) {
+            e.preventDefault();
+            togglePlayPause(e);
+        }
+        return;
+    }
+
+    // F = fullscreen, M = mute.
+    if (key === 'f' || key === 'F') {
+        e.preventDefault();
+        toggleFS(null);
+        return;
+    }
+
+    if (key === 'm' || key === 'M') {
+        e.preventDefault();
+        video.muted = !video.muted;
+        return;
+    }
+
+    // Android TV / browser Back is commonly exposed as Escape.
+    if (key === 'Escape' || key === 'BrowserBack') {
+        e.preventDefault();
+
+        if (document.getElementById('passcodeLock')) return;
+
+        if (infoDrawer.classList.contains('active')) {
+            hideDrawer();
+            focusFirstTVItem();
+        } else if (document.fullscreenElement) {
+            document.exitFullscreen().catch(() => {});
+        } else if (window.history.length > 1) {
+            window.history.back();
+        }
+        return;
+    }
+
     showControls();
 });
+
+// When the passcode is successfully entered, move focus to the first channel.
+const originalCheckPasscode = checkPasscode;
+checkPasscode = function() {
+    originalCheckPasscode();
+
+    if (!document.getElementById('passcodeLock')) {
+        setupTVChannelFocus();
+        setTimeout(focusFirstTVItem, 100);
+    }
+};
+
+// If filtering hides the currently focused item, focus the first visible result.
+const originalFilterChannels = filterChannels;
+filterChannels = function(q, cat) {
+    originalFilterChannels(q, cat);
+
+    const current = document.activeElement;
+    if (!isTVVisible(current)) {
+        const first = [...document.querySelectorAll('.ch-item[data-id]')].find(isTVVisible);
+        if (first) first.focus();
+    }
+};
+
 </script>
 </body>
 </html>
